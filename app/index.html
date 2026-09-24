@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Broken Crimp</title>
+    <!--
+        **The manifest is `.json` and not `.webmanifest`, and that is about the HOST** (S228).
+        The spec's type is `application/manifest+json`; every browser also accepts JSON, and a
+        static host that has not been taught the newer extension serves `.webmanifest` as
+        `application/octet-stream`, which Chrome refuses. This site is GitHub Pages and nothing
+        in this repo can reach it to check, so the extension that every host already knows is
+        the one that cannot be wrong. Relative, because the app is served from a path.
+    -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <!--
+        **ONE theme colour, set by the script below** (S234; two `media`-scoped ones until then).
+        The pair worked while the app followed the platform, and stopped the day LIGHT became the
+        default: a dark phone would have been told the window was Charcoal while the app painted
+        Chalk. The window's colour is the theme the app is ACTUALLY in, which is a stored choice
+        before it is a platform one, so it is resolved once — here — and written in both places.
+    -->
+    <meta name="theme-color" id="theme-color" content="#F5F1EA">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        /*
+         * **The reader's theme, resolved before the first paint** (S234).
+         *
+         * This is the one piece of the app's own logic that has to exist twice, and it is worth
+         * saying why rather than leaving it to be found. The ground under the page is painted by
+         * the BROWSER, seconds before any Kotlin exists — the wasm is ~15 MB — so if this file
+         * does not know which theme the reader is in, it must either guess or paint nothing. It
+         * used to guess, from `prefers-color-scheme`, and that guess was right for as long as an
+         * unset app followed the platform. `ThemePreference.DEFAULT` is LIGHT since S234, so the
+         * guess would now be wrong for every dark-phone reader who has never opened the row, and
+         * wrong for the whole of a slow first load.
+         *
+         * What it mirrors, all four of them asserted by `PwaShellTest` so this copy cannot drift:
+         *   - the KEY and its prefix — `ThemePreference.PREFS` + '/' + `ThemePreference.KEY`,
+         *     which is how `LocalStoragePrefsStore` names one file's worth of keys;
+         *   - the ENCODING — `StoredPrefs` writes `<type tag>:<text>`, so a string is `s:LIGHT`;
+         *   - the DEFAULT — `ThemePreference.DEFAULT`, for an absent or unreadable value, which
+         *     is the same fallback `readThemeMode` applies;
+         *   - the RESOLUTION — SYSTEM asks the platform, LIGHT and DARK do not, which is
+         *     `WebShell`'s own `when`.
+         *
+         * It cannot throw: a private window can make `localStorage` itself throw on access, and
+         * a page that failed to paint a background because it could not read a preference would
+         * be the worst possible trade for the thing this is here to fix.
+         */
+        (function () {
+            var mode = 'LIGHT';
+            try {
+                var raw = window.localStorage.getItem('settings/themeMode');
+                // `s:` is StoredPrefs' tag for a string. Anything else — another type, a
+                // truncated value, a mode this build has never heard of — is left as the
+                // default, which is what `readThemeMode` does with the same bytes.
+                if (raw && raw.slice(0, 2) === 's:') {
+                    var stored = raw.slice(2);
+                    if (stored === 'LIGHT' || stored === 'DARK' || stored === 'SYSTEM') mode = stored;
+                }
+            } catch (e) { /* storage refused; the default stands */ }
+            var dark = mode === 'DARK' || (mode === 'SYSTEM' &&
+                window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            var meta = document.getElementById('theme-color');
+            if (meta) meta.setAttribute('content', dark ? '#191817' : '#F5F1EA');
+        })();
+    </script>
+    <style>
+        /* The ground under the app, painted before a single frame is drawn — so it has to be
+           the ground the app is about to paint, in whichever theme the reader is in. The two
+           values are `Theme.kt`'s own Charcoal and Chalk; which one is chosen is the script
+           above, not a media query, for the reason it gives. */
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #F5F1EA; touch-action: none; }
+        html[data-theme="dark"], html[data-theme="dark"] body { background: #191817; }
+        #root { position: fixed; inset: 0; }
+
+        /*
+         * **The landing page** (S234, the owner: *"the current loading text only shows up after
+         * a few seconds"*).
+         *
+         * It was true and the reason is arithmetic: the app's own *Loading…* is drawn by Compose,
+         * which cannot draw anything until ~15 MB of wasm has arrived and started. Everything
+         * here is static markup and CSS in the document, so it is on screen in the first paint —
+         * before a byte of the app has been fetched — and it is the SAME loading state the whole
+         * way through rather than a blank screen that becomes a different one.
+         *
+         * No layout that depends on a web font, no image that must decode before anything is
+         * visible: the icon is the one the favicon has already asked for, and if it has not
+         * arrived the name and the bar stand on their own.
+         */
+        #boot {
+            position: fixed; inset: 0; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 18px;
+            font: 500 17px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1E1B18;
+            /* **Its OWN ground, not the body's showing through** — measured, not assumed: with
+               this transparent, the app's canvas draws underneath and its own *Loading…* was
+               legible through the landing page, two loading states at once. It is the same two
+               values `html` uses, which is the point: nothing changes colour when this goes. */
+            background: #F5F1EA;
+            /* The app takes the taps the moment it is drawn, and this is removed from the
+               document then — but during the fade it must already be letting them through. */
+            transition: opacity 180ms ease-out;
+        }
+        html[data-theme="dark"] #boot { color: #F5F1EA; background: #191817; }
+        #boot.gone { opacity: 0; pointer-events: none; }
+        /* The icon is a MASKABLE one — full-bleed artwork with its own ground (`gen_icon.py`),
+           drawn by a launcher inside a shape. Unmasked it is a pale square on a pale page, so it
+           gets the shape here that Android would give it. */
+        #boot img { width: 96px; height: 96px; display: block; border-radius: 22%; }
+        #boot .name { letter-spacing: 0.01em; }
+        #boot .hint { font-size: 14px; font-weight: 400; opacity: 0.66; }
+        /* An INDETERMINATE bar, because the page genuinely does not know how far along it is:
+           the wasm is fetched by the generated loader, and a bar that invented a percentage
+           would be the page claiming to know something it does not. */
+        #boot .bar { width: 172px; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(30, 27, 24, 0.14); }
+        html[data-theme="dark"] #boot .bar { background: rgba(245, 241, 234, 0.18); }
+        #boot .bar i { display: block; width: 40%; height: 100%; border-radius: 2px; background: #C75B39; animation: crimp-slide 1.15s ease-in-out infinite; }
+        html[data-theme="dark"] #boot .bar i { background: #E8886A; }
+        @keyframes crimp-slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(360%); } }
+        /* A reader who has asked for less motion gets a bar that breathes rather than travels —
+           still a sign that something is happening, without the movement. */
+        @media (prefers-reduced-motion: reduce) {
+            #boot .bar i { width: 100%; animation: crimp-pulse 1.6s ease-in-out infinite; }
+            @keyframes crimp-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<!--
+    `role="status"` rather than `aria-hidden`: while this is on screen it IS the page, and a
+    reader who cannot see the bar is the one who most needs to be told the app is still coming.
+    The two words are the two this page already hard-codes (`WebShell.kt`'s `APP_NAME` and
+    `LOADING`) and for the recorded reason: the app's words are FETCHED, and these are what is on
+    screen while they are — only earlier, from a file that has no way to read a resource at all.
+-->
+<div id="boot" role="status">
+    <img src="icons/icon-192.png" alt="">
+    <div class="name">Broken Crimp</div>
+    <div class="bar"><i></i></div>
+    <div class="hint">Loading…</div>
+</div>
+<script type="application/javascript" src="brokencrimp.js"></script>
+<script type="application/javascript">
+    /*
+     * **The app says when it is up, and the landing page goes** (S234).
+     *
+     * Not a timer and not *the canvas exists*: both would uncover a surface that is not ready.
+     * `WebShell` calls this once the store has hydrated and the first screen is composed — the
+     * same instant the app becomes usable — and on the failure branch too, because a landing page
+     * that outlives a failed boot is a spinner over a sentence nobody can read.
+     */
+    window.brokenCrimpReady = function () {
+        var boot = document.getElementById('boot');
+        if (!boot) return;
+        boot.classList.add('gone');
+        // Removed rather than left transparent: it sits over the canvas, and an element that is
+        // merely invisible still has to be composited on every frame the app draws.
+        window.setTimeout(function () { if (boot.parentNode) boot.parentNode.removeChild(boot); }, 220);
+    };
+
+    // **The worker is registered after load, not during it** (S228). Registration competes for
+    // the same connections as the 15 MB of wasm the page is already fetching, and there is
+    // nothing it can do on a first visit that is worth slowing that down: it precaches for the
+    // NEXT visit either way.
+    //
+    // No feature test beyond this one is needed — `navigator.serviceWorker` is simply absent
+    // outside a secure context, so a page opened over plain http (or from `file://`) registers
+    // nothing and works exactly as it did before this existed.
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js').catch(function (e) {
+                // A failed registration is not a failed app: say so where a developer will see
+                // it and carry on serving from the network.
+                console.warn('Broken Crimp: the offline worker did not register', e);
+            });
+        });
+    }
+</script>
+</body>
+</html>

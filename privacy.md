@@ -14,7 +14,7 @@ title: "Privacy Policy for Broken Crimp"
 {:toc}
 </nav>
 
-**Last updated: 23 September 2026**
+**Last updated: 24 September 2026**
 
 Broken Crimp ("the app") is a notebook for sport climbers and boulderers. You use it
 to record climbs and to draw **beta maps** — move-by-move sequences over a picture of
@@ -24,6 +24,7 @@ It comes in two forms, and this policy covers both:
 
 * the **Android app** from Google Play;
 * the **web version**, which runs in your browser at
+  [brokencrimp.com/app/](https://brokencrimp.com/app/) and, for now, also at
   [www.alessandromasullo.com/broken-crimp/app/](https://www.alessandromasullo.com/broken-crimp/app/).
 
 This policy explains what happens to information when you use the app. In short:
@@ -64,8 +65,10 @@ only. None of it is transmitted to us or to any third party.
 
 In the **Android app** that storage is the app's own private area, which no other app
 can read. In the **web version** it is your browser's own storage for this site
-(IndexedDB), which no other website can read. In both cases the data never leaves the
-device it was created on unless you export it yourself — see section 6.
+(IndexedDB), which no other website can read. The web version's two addresses are
+two separate sites to your browser, so each keeps its own storage: climbs saved at one
+do not appear at the other. In both cases the data never leaves the device it was
+created on unless you export it yourself — see section 6.
 
 **Climbs you create**
 
