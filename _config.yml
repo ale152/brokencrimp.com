@@ -2,7 +2,7 @@
 # website/brokencrimp.com/. Edit it there, never here.
 title: Broken Crimp
 description: Map your beta. Never forget a move.
-url: https://brokencrimp.com
+url: https://www.brokencrimp.com
 markdown: kramdown
 kramdown:
   auto_ids: true

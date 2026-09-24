@@ -24,7 +24,7 @@ It comes in two forms, and this policy covers both:
 
 * the **Android app** from Google Play;
 * the **web version**, which runs in your browser at
-  [brokencrimp.com/app/](https://brokencrimp.com/app/) and, for now, also at
+  [www.brokencrimp.com/app/](https://www.brokencrimp.com/app/) and, for now, also at
   [www.alessandromasullo.com/broken-crimp/app/](https://www.alessandromasullo.com/broken-crimp/app/).
 
 This policy explains what happens to information when you use the app. In short:
