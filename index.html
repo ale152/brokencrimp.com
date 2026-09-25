@@ -3,7 +3,11 @@ layout: default
 body_class: home
 description: A notebook for climbers. Put the holds on a photo of the wall, set the moves in order, and play your beta back. Free on Android and in your browser.
 ---
-<section class="hero">
+<!-- The header's background is a wall with a climber on it, who climbs as the page
+     scrolls (assets/scroll-beta.js). Without the script it is a plain dark header. -->
+<section class="hero" data-scroll-beta="/assets/scroll-beta/beta.json">
+  <canvas class="hero-wall" aria-hidden="true"></canvas>
+  <div class="hero-content">
   <img class="hero-icon" src="/assets/icon-512.png" alt="Broken Crimp app icon" width="112" height="112">
   <h1>Map your beta.<br>Never forget a move.</h1>
   <p class="lead">Broken Crimp is a notebook for sport, trad and boulder climbers. Put the
@@ -13,23 +17,117 @@ description: A notebook for climbers. Put the holds on a photo of the wall, set 
     <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.brokencrimp.app">Get it on Google Play</a>
     <a class="btn" href="/app/">Open it in your browser</a>
   </div>
-  <p class="small">Free, with ads. No account, no sign-up. In English and Italian.</p>
+  <p class="small">Free, with ads. No account, no sign-up.</p>
+  </div>
+</section>
+<script src="/assets/scroll-beta.js" defer></script>
+<script src="/assets/screens.js" defer></script>
+
+<!-- The owner's screen captures of the app, one per area; tools/website/make_screens.py
+     cuts them. Copy rule: no word that sounds like filming the climber (the R-word included). -->
+<section class="feature">
+  <figure class="screen">
+    <video data-src="/assets/screens/play.mp4" poster="/assets/screens/play.webp"
+      width="540" height="1100" muted loop playsinline preload="none" aria-label="A beta playing: the figure climbing from move to move.">
+      <img src="/assets/screens/play.webp" width="540" height="1100" alt="A beta playing: the figure climbing from move to move.">
+    </video>
+  </figure>
+  <div class="feature-text">
+    <h2>Watch your beta climb</h2>
+    <p>Press play and the figure climbs your sequence on the real wall, or step through it
+      one move at a time. Go over it in your head before a redpoint, or follow it at the
+      bottom of the route.</p>
+  </div>
+</section>
+
+<section class="feature">
+  <figure class="screen">
+    <video data-src="/assets/screens/beta.mp4" poster="/assets/screens/beta.webp"
+      width="540" height="1100" muted loop playsinline preload="none" aria-label="Setting a beta: the limb dial picks a hand or a foot, and the figure on the wall moves to each hold tapped.">
+      <img src="/assets/screens/beta.webp" width="540" height="1100" alt="Setting a beta: the limb dial picks a hand or a foot, and the figure on the wall moves to each hold tapped.">
+    </video>
+  </figure>
+  <div class="feature-text">
+    <h2>The beta is yours</h2>
+    <p>The moves it plays are the ones you set, because Broken Crimp never tells you how to
+      climb. Pick a hand or a foot on the dial and tap the hold it goes to, move by move.
+      Add the details of each move, like a heel hook or a drop knee, and the figure climbs
+      it that way.</p>
+    <p>Set the climber's height for each beta, so the figure reaches what you reach. Keep
+      your friend's beta beside yours on the same climb.</p>
+  </div>
+</section>
+
+<section class="feature">
+  <figure class="screen">
+    <video data-src="/assets/screens/holds.mp4" poster="/assets/screens/holds.webp"
+      width="540" height="1100" muted loop playsinline preload="none" aria-label="Holds placed on a photo of a bouldering wall, picked from the holds drawer, then duplicated.">
+      <img src="/assets/screens/holds.webp" width="540" height="1100" alt="Holds placed on a photo of a bouldering wall, picked from the holds drawer, then duplicated.">
+    </video>
+  </figure>
+  <div class="feature-text">
+    <h2>It starts with the wall</h2>
+    <p>Before any moves, take a photo of the climb and put the holds on it, from a
+      catalogue of 37 types: crimps, jugs, slopers, pockets and volumes, plus the bolts,
+      cams and nuts a trad line runs on. Give them nicknames, and add section dividers
+      where the climb changes character. Draw it once, and every beta on that climb uses
+      the same holds.</p>
+  </div>
+</section>
+
+<section class="feature">
+  <figure class="screen">
+    <video data-src="/assets/screens/media.mp4" poster="/assets/screens/media.webp"
+      width="540" height="1100" muted loop playsinline preload="none" aria-label="A hold's sheet with a close-up photo and a voice note playing, then an annotated photo of a foothold.">
+      <img src="/assets/screens/media.webp" width="540" height="1100" alt="A hold's sheet with a close-up photo and a voice note playing, then an annotated photo of a foothold.">
+    </video>
+  </figure>
+  <div class="feature-text">
+    <h2>Then the details a drawing misses</h2>
+    <p>Attach a close-up photo to a single hold, so you can see the exact edge you need.
+      Leave yourself a voice note while it is fresh, and write down what went wrong last
+      time. Tap the hold and it is all there, next to the moves that use it.</p>
+  </div>
+</section>
+
+<section class="feature">
+  <figure class="screen">
+    <video data-src="/assets/screens/share.mp4" poster="/assets/screens/share.webp"
+      width="540" height="1100" muted loop playsinline preload="none" aria-label="The share options, then the PDF export flipping through its pages, one move each.">
+      <img src="/assets/screens/share.webp" width="540" height="1100" alt="The share options, then the PDF export flipping through its pages, one move each.">
+    </video>
+  </figure>
+  <div class="feature-text">
+    <h2>When it is ready, share it</h2>
+    <p>Send the whole climb, photo, holds and every beta, to a friend as a file they open
+      in their own app. Export a PDF to print, with a page per move, save the figure
+      climbing the sequence as a video, or copy a plain list of the moves to paste into a
+      message.</p>
+    <p>Back up everything to a single file you keep yourself.</p>
+  </div>
 </section>
 
 <section class="points">
   <div>
-    <h2>Draw the climb</h2>
-    <p>Place holds on a photo of the real wall, from crimps and slopers to bolts and
-      cams. Record which hand or foot goes where, and in what order.</p>
+    <h2>Works where you climb</h2>
+    <p>No signal at the crag, no problem. Everything works offline, and your climbs,
+      photos and voice notes stay on your device. We run no servers.</p>
   </div>
   <div>
-    <h2>Works at the crag</h2>
-    <p>No signal, no problem. Everything works offline, and your climbs, photos and
-      voice notes stay on your device. We run no servers.</p>
+    <h2>Or in your browser</h2>
+    <p>No install, no account. It saves in the browser on that device and runs offline
+      once it has loaded. A <code>.beta</code> file opens in either version.</p>
   </div>
   <div>
-    <h2>Share it</h2>
-    <p>Send a climb to a friend as a file their app opens, or export a PDF, a video
-      of the sequence, or a plain list of the moves.</p>
+    <h2>Free, with ads</h2>
+    <p>Broken Crimp is free to use. A few ads keep it that way.</p>
+  </div>
+</section>
+
+<section class="closing">
+  <h2>Never forget a move.</h2>
+  <div class="actions">
+    <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.brokencrimp.app">Get it on Google Play</a>
+    <a class="btn" href="/app/">Open it in your browser</a>
   </div>
 </section>

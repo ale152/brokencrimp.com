@@ -36,6 +36,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   overflow-wrap: break-word; /* a long URL in the policy must not widen a phone */
+  overflow-x: clip;          /* the full-bleed header is 100vw, scrollbar included */
 }
 main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 0 20px 48px; }
 a { color: var(--accent-ink); }
@@ -47,16 +48,55 @@ img { max-width: 100%; height: auto; }
   color: var(--text); text-decoration: none; font-weight: 700; font-size: 18px;
 }
 .brand img { border-radius: 8px; }
-.home .bar { visibility: hidden; }
+.home .bar { display: none; } /* the header is the page's top edge */
 
 /* Landing */
-.hero { text-align: center; padding: 24px 0 40px; }
-.hero-icon { border-radius: 26px; box-shadow: 0 6px 24px rgb(0 0 0 / 0.12); }
+/* The header carries the wall (assets/scroll-beta.js draws it and the climber on it).
+   On a phone the wall is a panel above the words, fading into them; on a wide screen
+   it is the whole header's background, with the words on the left over a scrim and
+   the climber held on the right. `--climber-x`/`--climber-y` tell the script where
+   in the canvas to hold the climber, and `--wall-overhang` how much of the canvas may
+   lie past the wall's left edge (the scrim side). Dark in both themes: it is a photograph. */
+.hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  width: 100vw; margin: 0 calc(50% - 50vw) 40px;
+  text-align: center; color: #F5F1EA; background: #191817;
+  --wall-h: 62vh; --wall-h: 62svh;
+}
+.hero-wall {
+  display: block; width: 100%; height: var(--wall-h);
+  --climber-x: 0.5; --climber-y: 0.5;
+}
+.hero::after {
+  content: ""; position: absolute; left: 0; right: 0; pointer-events: none;
+  top: calc(var(--wall-h) - 96px); height: 96px;
+  background: linear-gradient(to bottom, rgb(25 24 23 / 0), #191817);
+}
+.hero-content { position: relative; z-index: 1; max-width: 760px; margin: -24px auto 0; padding: 0 20px 40px; }
+.hero-icon { border-radius: 20px; box-shadow: 0 6px 24px rgb(0 0 0 / 0.3); width: 72px; height: 72px; }
 .hero h1 {
   font-size: clamp(32px, 7vw, 52px); line-height: 1.1; letter-spacing: -0.02em;
-  margin: 28px 0 16px;
+  margin: 20px 0 16px;
 }
-.lead { font-size: 19px; color: var(--muted); max-width: 34em; margin: 0 auto 28px; }
+.lead { font-size: 19px; color: #E7DFD3; max-width: 34em; margin: 0 auto 28px; }
+.hero .small { color: #CFC6BB; }
+.hero .btn:not(.primary) { border-color: #F5F1EA; color: #F5F1EA; }
+@media (min-width: 900px) {
+  .hero {
+    min-height: min(88vh, 780px); min-height: min(88svh, 780px);
+    display: flex; align-items: center; text-align: left;
+  }
+  .hero-wall { position: absolute; inset: 0; height: 100%; z-index: -2;
+    --climber-x: 0.72; --climber-y: 0.5; --wall-overhang: 0.45; }
+  .hero::after {
+    inset: 0; height: auto; z-index: -1;
+    background: linear-gradient(to right, rgb(25 24 23 / 0.9) 0%, rgb(25 24 23 / 0.75) 38%, rgb(25 24 23 / 0) 62%);
+  }
+  .hero-content { margin: 0 0 0 max(20px, calc(50vw - 560px)); max-width: 520px; padding: 48px 0; }
+  .hero h1 { text-shadow: 0 2px 16px rgb(0 0 0 / 0.4); }
+  .lead { margin: 0 0 28px; }
+  .hero .actions { justify-content: flex-start; }
+}
 .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .btn {
   display: inline-block; padding: 14px 22px; border-radius: 999px;
@@ -66,8 +106,65 @@ img { max-width: 100%; height: auto; }
 .btn.primary { background: var(--accent); color: var(--on-accent); }
 .btn:hover { filter: brightness(1.06); }
 .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+.hero .btn:focus-visible { outline-color: #F5F1EA; }
 .small { font-size: 14px; color: var(--muted); margin-top: 20px; }
-.points { display: grid; gap: 16px; grid-template-columns: 1fr; }
+/* Feature rows: a real screenshot beside its words, alternating sides on a wide screen. */
+.feature {
+  display: grid; gap: 24px; align-items: center;
+  grid-template-columns: 1fr; margin: 0 0 56px;
+}
+.screen { margin: 0 auto; width: min(280px, 76%); position: relative; }
+/* Bare screen captures of the app, so a dark bezel frames them like a phone. */
+.screen video, .screen img {
+  display: block; width: 100%; height: auto; aspect-ratio: 540 / 1100;
+  border: 6px solid #1d1b1a; border-radius: 26px; background: #1d1b1a;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+}
+/* The play bar (assets/screens.js): inside the bezel, shown while the pointer is over
+   the video or the bar has focus. */
+.playbar {
+  position: absolute; left: 6px; right: 6px; bottom: 6px;
+  display: flex; align-items: center; gap: 10px; padding: 22px 14px 12px;
+  border-radius: 0 0 20px 20px;
+  /* dark enough that the app's own playback controls under it do not read as this bar */
+  background: linear-gradient(rgb(20 18 17 / 0), rgb(20 18 17 / 0.85) 45%);
+  opacity: 0; transition: opacity 0.2s;
+}
+.screen:hover .playbar, .playbar:focus-within { opacity: 1; }
+.playbar-btn {
+  flex: none; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%;
+  background: rgb(255 255 255 / 0.92); cursor: pointer; position: relative;
+}
+.playbar-btn::before {   /* a play triangle */
+  content: ""; position: absolute; left: 11px; top: 8px;
+  border-style: solid; border-width: 6px 0 6px 9px;
+  border-color: transparent transparent transparent #191817;
+}
+.playbar-btn.is-playing::before {   /* two pause bars */
+  left: 9px; top: 8px; width: 3px; height: 12px; border: 0;
+  background: #191817; box-shadow: 6px 0 0 #191817;
+}
+.playbar-track {
+  flex: 1; height: 16px; cursor: pointer; touch-action: none; position: relative;
+}
+.playbar-track::before, .playbar-fill {
+  content: ""; position: absolute; left: 0; top: 6px; height: 4px; border-radius: 2px;
+}
+.playbar-track::before { right: 0; background: rgb(255 255 255 / 0.35); }
+.playbar-fill { width: 0; background: #fff; }
+.playbar-btn:focus-visible, .playbar-track:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.feature h2 { font-size: 24px; line-height: 1.2; margin: 0 0 12px; }
+.feature p { margin: 0 0 12px; color: var(--muted); }
+@media (min-width: 700px) {
+  .feature { grid-template-columns: 280px 1fr; gap: 48px; }
+  .screen { width: 100%; }
+  .feature:nth-of-type(odd) { grid-template-columns: 1fr 280px; }
+  .feature:nth-of-type(odd) .screen { order: 2; }
+}
+.closing { text-align: center; margin: 56px 0 8px; }
+.closing h2 { font-size: clamp(26px, 5vw, 34px); margin: 0 0 20px; }
+.points code { background: var(--bg); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+.points { display: grid; margin: 0 0 16px; gap: 16px; grid-template-columns: 1fr; }
 @media (min-width: 700px) { .points { grid-template-columns: repeat(3, 1fr); } }
 .points > div { background: var(--surface); border-radius: 16px; padding: 20px; }
 .points h2 { font-size: 18px; margin: 0 0 6px; }
