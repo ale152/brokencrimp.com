@@ -69,6 +69,191 @@
             if (meta) meta.setAttribute('content', dark ? '#191817' : '#F5F1EA');
         })();
     </script>
+    <script>
+        /*
+         * **The two wasm files are fetched from HERE, and counted** (S269, the owner: *"is there a
+         * way to speed up the first time loading of the app? And is it possible for the progress
+         * bar to have a progression?"*).
+         *
+         * Both answers are one mechanism. The generated loader asks for the two wasm files only
+         * once `brokencrimp.js` has arrived and RUN — half a megabyte of script, so the requests
+         * went out at 0.14–0.31 s on this Mac and at 1.5–1.8 s with the CPU slowed four times.
+         * Started here they go out in the first paint, at about 0.03 s and 0.2 s. (The loader
+         * did already fetch the two IN PARALLEL, measured — the first draft of this comment
+         * said it fetched them in series, and it does not.) And because this page is the one
+         * holding the bytes, it can say how many have come.
+         *
+         * **The total is written in by the build**, into the one line below that starts as `null`:
+         * `:web`'s `pwaServiceWorker` task replaces that value with each file's name and UNPACKED
+         * size. The size has to come from the build rather than from the response, because the
+         * live host sends the wasm gzipped — `Content-Length` is the compressed length and the
+         * stream hands this script the decompressed bytes, so the two can never be compared.
+         * Where nothing was written (a development server running the unprocessed page) the
+         * value stays `null`, this does nothing, and the bar is the indeterminate one below.
+         *
+         * **Three decisions, each measured or forced rather than preferred:**
+         *
+         *  - **Not under a service worker.** A returning reader's files come out of the worker's
+         *    cache in milliseconds, so there is no download to show; and Chrome caches the
+         *    COMPILED module against the response's URL, which a response rebuilt here does not
+         *    have. So a controlled page is left exactly as it was, and the loader fetches for
+         *    itself.
+         *  - **The body is read eagerly, into this script's own stream.** A fetch body nobody
+         *    reads applies backpressure: the network stops after a buffer's worth and waits.
+         *    Nothing asks for these until `brokencrimp.js` has run, so a response merely held
+         *    here would stall, and neither the early start nor the count would be real.
+         *    Reading it as it arrives, and queueing the chunks for whoever asks, is what makes
+         *    both real.
+         *  - **The loader gets a response only by asking for it.** `fetch` is wrapped for exactly
+         *    as long as a file is unclaimed, matched by the file's NAME (both are content-hashed,
+         *    so a name is the file), and put back once both have been handed over. Everything
+         *    else goes straight through.
+         *
+         * It cannot break the boot it measures: any failure here drops back to the indeterminate
+         * bar, and a response that failed is handed over as it came, so the loader reports its
+         * own error exactly as it did before this existed.
+         */
+        (function () {
+            var wasm = /*__BOOT_WASM__*/{"5a894c3b9f3b2fbe7f5c.wasm":8082498,"6e23e5428398b92da386.wasm":8652729};
+            var root = document.documentElement;
+            function unmeasured() { root.removeAttribute('data-boot'); }
+            try {
+                if (!wasm || !window.fetch || !window.ReadableStream || !window.Response) return;
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) return;
+                // **The first-visit note is up for the WHOLE of every load that downloads the
+                // app** — here, past the worker check, and never taken down before the landing
+                // page goes. The owner's ruling (2026-09-26), and a labelled reversal of this
+                // item's own first draft, which showed it only where a service worker could
+                // install, because *after that, it opens faster* is kept by the worker. That hid
+                // it on a LAN address for the whole load; the owner, testing on one: *"the
+                // message about the first loading should be visible throughout the entire
+                // load"*. The cost is known and small: where no worker installs (a LAN address,
+                // a private window in some browsers) the second sentence overpromises. The live
+                // site is https, where it is true. A CACHED load still shows no note: nothing is
+                // downloading, and it is not a first visit.
+                root.setAttribute('data-first-visit', '');
+                var names = Object.keys(wasm);
+                var total = 0;
+                for (var i = 0; i < names.length; i++) total += wasm[names[i]];
+                if (!total) return;
+
+                // **The download is HALF the bar, and that is a measurement** (S269, cold loads
+                // in Chrome 153 at 20 Mbps): the wasm had all arrived at 2.4 s of a 5.0 s boot on
+                // this Mac, and at 2.6 s of 16.2 s with the CPU slowed four times, which is the
+                // nearer picture of a phone. Everything after the last byte — compiling, the
+                // words, the store — is time this page cannot see into by itself, so the second
+                // half steps on the app's own milestones (below) until it says it is up
+                // (`brokenCrimpReady`). Nine tenths was the first draft, and it would have told a
+                // phone reader *nearly there* with four fifths of the wait still ahead. Half held up
+                // after S270 shortened the start-up: the last byte at about 2.5 s of a 4.5 s load
+                // with the CPU slowed four times.
+                var DOWNLOAD_SHARE = 0.5;
+
+                // **After the download, the app's own MILESTONES** (the owner, 2026-09-26: *"the
+                // second half of the loading bar doesn't move"*, then *"real milestones"*). The
+                // app reports each through `brokenCrimpStage` (`WebShell.kt`'s `BootStage`): its
+                // modules are running, Compose is up, its words are loaded, its store is open. Each
+                // is worth a fixed share of the bar, which the fill steps to when it is REAL;
+                // between two, the fill eases toward the next one's share and never reaches it, so
+                // it keeps moving without claiming a milestone the app has not reported. Each row:
+                // the stage, its share, and the seconds it usually takes after the one before it,
+                // which paces the easing. **Both are measured** (cold loads, 20 Mbps, the CPU slowed
+                // four times, `web.md` §S270): after the last byte, 0.3 s to running, 0.8 s to
+                // Compose, 1.8 s to the words and the face, 0.06 s to the store and 0.26 s to the
+                // app being up, so each share is the second half split in those proportions.
+                var STAGES = [
+                    ['running', 0.55, 0.3],
+                    ['compose', 0.67, 0.8],
+                    ['words', 0.93, 1.8],
+                    ['store', 0.96, 0.1]
+                ];
+                var READY_SECONDS = 0.3;   // from the last milestone to the app being up
+                var reached = -1;          // the last milestone reached; -1 is the download
+                function easeFrom(share, index) {
+                    var next = STAGES[index + 1];
+                    var target = next ? next[1] : 1;
+                    root.style.setProperty('--boot', String(share));
+                    // Most of the way to the next milestone, and no further until it is reported.
+                    root.style.setProperty('--boot-to', String(share + 0.85 * (target - share)));
+                    root.style.setProperty('--boot-secs', (2 * (next ? next[2] : READY_SECONDS)) + 's');
+                    // Two names for one animation, alternated, so each milestone RESTARTS it.
+                    root.setAttribute('data-boot', index % 2 ? 'toward-b' : 'toward-a');
+                }
+                window.brokenCrimpStage = function (name) {
+                    try {
+                        var state = root.getAttribute('data-boot');
+                        if (!state || state === 'done') return;
+                        for (var k = reached + 1; k < STAGES.length; k++) {
+                            if (STAGES[k][0] === name) { reached = k; easeFrom(STAGES[k][1], k); return; }
+                        }
+                    } catch (e) { /* a milestone is never a reason to break the page */ }
+                };
+
+                var loaded = 0;
+                function counted(bytes) {
+                    loaded += bytes;
+                    var done = Math.min(1, loaded / total);
+                    if (reached >= 0) return;
+                    root.style.setProperty('--boot', String(DOWNLOAD_SHARE * done));
+                    if (done >= 1) easeFrom(DOWNLOAD_SHARE, -1);
+                }
+
+                function eager(response) {
+                    if (!response.ok || !response.body) { unmeasured(); return response; }
+                    var reader = response.body.getReader();
+                    var body = new ReadableStream({
+                        start: function (controller) {
+                            (function pump() {
+                                reader.read().then(function (step) {
+                                    if (step.done) { controller.close(); return; }
+                                    counted(step.value.byteLength);
+                                    controller.enqueue(step.value);
+                                    pump();
+                                }, function (e) { unmeasured(); controller.error(e); });
+                            })();
+                        }
+                    });
+                    // Only the type crosses: `instantiateStreaming` refuses anything but
+                    // `application/wasm`, and the length and encoding describe bytes this body
+                    // no longer carries.
+                    return new Response(body, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: { 'Content-Type': response.headers.get('Content-Type') || '' }
+                    });
+                }
+
+                var early = {};
+                names.forEach(function (name) {
+                    early[name] = fetch(name, { credentials: 'same-origin' }).then(eager);
+                    // Handled here as well as by the loader, so a file the loader never asks for
+                    // cannot surface as an unhandled rejection.
+                    early[name].catch(unmeasured);
+                });
+
+                var unclaimed = names.length;
+                var platformFetch = window.fetch;
+                window.fetch = function (input) {
+                    var name = null;
+                    try {
+                        var url = typeof input === 'string' ? input : (input && input.url) || String(input);
+                        name = new URL(url, document.baseURI).pathname.split('/').pop();
+                    } catch (e) { /* not a URL this page can read; not one of ours */ }
+                    if (name && Object.prototype.hasOwnProperty.call(early, name)) {
+                        var claimed = early[name];
+                        delete early[name];
+                        if (--unclaimed === 0) window.fetch = platformFetch;
+                        return claimed;
+                    }
+                    return platformFetch.apply(window, arguments);
+                };
+                root.style.setProperty('--boot', '0');
+                root.setAttribute('data-boot', 'measured');
+            } catch (e) {
+                unmeasured();
+            }
+        })();
+    </script>
     <style>
         /* The ground under the app, painted before a single frame is drawn — so it has to be
            the ground the app is about to paint, in whichever theme the reader is in. The two
@@ -115,9 +300,23 @@
         #boot img { width: 96px; height: 96px; display: block; border-radius: 22%; }
         #boot .name { letter-spacing: 0.01em; }
         #boot .hint { font-size: 14px; font-weight: 400; opacity: 0.66; }
-        /* An INDETERMINATE bar, because the page genuinely does not know how far along it is:
-           the wasm is fetched by the generated loader, and a bar that invented a percentage
-           would be the page claiming to know something it does not. */
+        /* **The hint line takes turns** (S269, the owner's second ask): *Loading…* first, then the
+           climbing lines the script under the markup adds, one at a time. They are stacked in
+           one line's height and faded by keyframes, which is S253's reason again: the compositor
+           runs an `opacity`/`transform` animation while the page's one thread is busy, and a
+           timer swapping the text would stop the moment the app started. */
+        #boot .hint { position: relative; align-self: stretch; height: 1.3em; text-align: center; }
+        #boot .hint span { position: absolute; top: 0; left: 16px; right: 16px; white-space: nowrap; }
+        #boot .hint .quip { opacity: 0; will-change: opacity, transform; }
+        @keyframes crimp-said { 0%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-5px); } }
+        /* A PROMISE, shown only where it is kept — the head script sets the attribute. */
+        #boot .first { display: none; max-width: 264px; text-align: center; font-size: 13px; font-weight: 400; line-height: 1.4; opacity: 0.6; }
+        html[data-first-visit] #boot .first { display: block; }
+        /* An INDETERMINATE bar where the page does not know how far along it is, which is every
+           load but a first one: a bar that invented a percentage would be the page claiming to
+           know something it does not. S234 made this the only bar because the generated loader
+           fetched the wasm; since S269 the page fetches it on a first visit and knows the byte
+           count (the second script in the head), so there the bar below is the MEASURED one. */
         #boot .bar { width: 172px; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(30, 27, 24, 0.14); }
         html[data-theme="dark"] #boot .bar { background: rgba(245, 241, 234, 0.18); }
         #boot .bar i { display: block; width: 40%; height: 100%; border-radius: 2px; background: #C75B39; animation: crimp-slide 1.15s ease-in-out infinite; }
@@ -128,6 +327,42 @@
         @media (prefers-reduced-motion: reduce) {
             #boot .bar i { width: 100%; animation: crimp-pulse 1.6s ease-in-out infinite; }
             @keyframes crimp-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        }
+        /* **The MEASURED bar** (S269): the fill is the share of the wasm that has arrived,
+           written into `--boot` by the head script. A `transform` and not a `width`, for S253's
+           reason: the compositor animates a transform while the page's one thread is busy, and
+           from the moment the wasm starts running it is. */
+        html[data-boot] #boot .bar i {
+            width: 100%; animation: none; transform-origin: left center;
+            transform: scaleX(var(--boot, 0)); transition: transform 240ms ease-out;
+            will-change: transform, opacity;
+        }
+        /* **The second half steps on the app's MILESTONES** (the owner, 2026-09-26: *"the second
+           half of the loading bar doesn't move"*). A labelled reversal, twice over, of this item's
+           own drafts: the first stopped at half and breathed, on S234's reasoning that a bar must
+           not claim what it does not know, and read as STUCK; the second eased on by a TIMER from
+           half towards 95%, which moved but knew nothing. Now the app reports where it has got to
+           (`brokenCrimpStage`, the head script), each report puts the fill at that milestone's
+           share, and between two the fill eases most of the way to the next one's share and
+           stops there until the app reports it. Keyframes, so the compositor keeps the easing
+           running through the start-up's long tasks; two names for one animation, so each
+           milestone restarts it from its own floor. `--boot` is the floor, `--boot-to` how far
+           this stretch may go, `--boot-secs` how long it takes; past that the fill breathes. */
+        @keyframes crimp-toward-a { from { transform: scaleX(var(--boot)); } to { transform: scaleX(var(--boot-to)); } }
+        @keyframes crimp-toward-b { from { transform: scaleX(var(--boot)); } to { transform: scaleX(var(--boot-to)); } }
+        html[data-boot="toward-a"] #boot .bar i { animation: crimp-toward-a var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards, crimp-breathe 1.4s ease-in-out var(--boot-secs, 2s) infinite; }
+        html[data-boot="toward-b"] #boot .bar i { animation: crimp-toward-b var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards, crimp-breathe 1.4s ease-in-out var(--boot-secs, 2s) infinite; }
+        @keyframes crimp-breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+        /* The app is up: the estimate stops and the fill runs to the end as the page fades. */
+        html[data-boot="done"] #boot .bar i { transform: scaleX(1); }
+        @media (prefers-reduced-motion: reduce) {
+            html[data-boot] #boot .bar i { transition: none; }
+            /* The fill still grows (it is the progress), but nothing pulses. */
+            html[data-boot="toward-a"] #boot .bar i { animation: crimp-toward-a var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards; }
+            html[data-boot="toward-b"] #boot .bar i { animation: crimp-toward-b var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards; }
+            /* The lines still take turns, by fading in place: `!important` is what outranks a
+               running animation's own `transform`. */
+            #boot .hint span { transform: none !important; }
         }
     </style>
 </head>
@@ -144,8 +379,79 @@
     <img src="icons/icon-192.png" alt="">
     <div class="name">Broken Crimp</div>
     <div class="bar"><i></i></div>
-    <div class="hint">Loading…</div>
+    <div class="hint"><span class="said">Loading…</span></div>
+    <div class="first">The first visit takes longer while the app downloads. After that, it opens faster.</div>
 </div>
+<script>
+    /*
+     * **The climbing lines** (S269, the owner: *"show some nice messages that change during the
+     * loading, like "crimping the crimps...", "jamming the cracks...", "dogging the proj..." and a
+     * few more"*).
+     *
+     * **One list, SHUFFLED once per load and then repeated until the app is up.** The owner cut
+     * the first draft's fifteen to these eleven and tried them in the order of a climb, chains
+     * last; but at 2.4 s a line almost no load reaches the chains (a phone's first visit ends near
+     * the fifth line), so a fixed order would show every reader the same bottom of the route. A
+     * shuffle shows a different handful each time, and the cycle repeats in that order for as
+     * long as the loading lasts. It comes after *Loading…* has had the line to itself. Each line
+     * is its own element under ONE set of keyframes, offset by its slot: the timing lives in the
+     * animation, where the compositor keeps it running, and not in a timer the app's own start-up
+     * would stall.
+     *
+     * **A screen reader hears *Loading…* once.** This element is a `role="status"` live region,
+     * so text that changed every two seconds would be announced every two seconds; the lines are
+     * `aria-hidden` and the *Loading…* underneath them stays in the tree after it has faded.
+     *
+     * English only, like the two words above: the page cannot read the app's resources, which
+     * are fetched, and a pun on a crimp does not survive translation anyway.
+     */
+    (function () {
+        var QUIPS = [
+            'Flaking the rope…',
+            'Spraying beta…',
+            'Brushing the holds…',
+            'Chalking up…',
+            'Crimping the crimps…',
+            'Smearing the walls…',
+            'Jamming the cracks…',
+            'Dropping the knees…',
+            'Finding the kneebar…',
+            'Matching the jugs…',
+            'Clipping the chains…'
+        ];
+        var FIRST = 1.8;  // seconds *Loading…* has the line to itself
+        var SLOT = 2.4;   // seconds each climbing line is up
+        try {
+            var hint = document.querySelector('#boot .hint');
+            var said = hint && hint.querySelector('.said');
+            if (!said) return;
+            for (var i = QUIPS.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var swap = QUIPS[i]; QUIPS[i] = QUIPS[j]; QUIPS[j] = swap;
+            }
+            // One slot is this share of the whole cycle: in over its first eighth, out over its
+            // last sixth, and gone before the next line starts, so two lines never overlap.
+            var share = 100 / QUIPS.length;
+            var style = document.createElement('style');
+            style.textContent = '@keyframes crimp-quip {' +
+                '0% { opacity: 0; transform: translateY(5px); }' +
+                (share * 0.12).toFixed(3) + '% { opacity: 1; transform: none; }' +
+                (share * 0.85).toFixed(3) + '% { opacity: 1; transform: none; }' +
+                share.toFixed(3) + '%, 100% { opacity: 0; transform: translateY(-5px); } }';
+            document.head.appendChild(style);
+            var cycle = QUIPS.length * SLOT;
+            QUIPS.forEach(function (words, k) {
+                var line = document.createElement('span');
+                line.className = 'quip';
+                line.setAttribute('aria-hidden', 'true');
+                line.textContent = words;
+                line.style.animation = 'crimp-quip ' + cycle + 's linear ' + (FIRST + k * SLOT) + 's infinite both';
+                hint.appendChild(line);
+            });
+            said.style.animation = 'crimp-said ' + FIRST + 's linear forwards';
+        } catch (e) { /* the line keeps saying Loading… */ }
+    })();
+</script>
 <script type="application/javascript" src="brokencrimp.js"></script>
 <script type="application/javascript">
     /*
@@ -159,6 +465,11 @@
     window.brokenCrimpReady = function () {
         var boot = document.getElementById('boot');
         if (!boot) return;
+        // A measured bar finishes as it fades: the one moment the page KNOWS it is at the end.
+        // `done` ends the easing toward a milestone, which would otherwise hold the fill short.
+        var root = document.documentElement;
+        root.style.setProperty('--boot', '1');
+        if (root.hasAttribute('data-boot')) root.setAttribute('data-boot', 'done');
         boot.classList.add('gone');
         // Removed rather than left transparent: it sits over the canvas, and an element that is
         // merely invisible still has to be composited on every frame the app draws.
