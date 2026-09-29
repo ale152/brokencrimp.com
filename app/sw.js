@@ -36,12 +36,12 @@
 // a reader is untouched either way: **the climbs, the photos and the betas still come out of
 // IndexedDB and still go nowhere**, with or without an ad on the page.
 
-const VERSION = '8310eb0ef2ba5cbe';
+const VERSION = '6965aa31cd1c2977';
 const CACHE = 'brokencrimp-' + VERSION;
 const FILES = [
     './',
-    '5a894c3b9f3b2fbe7f5c.wasm',
     '6e23e5428398b92da386.wasm',
+    '7017a67a8909d02b1626.wasm',
     'brokencrimp.js',
     'composeResources/com.brokencrimp.app/drawable/app_icon.png',
     'composeResources/com.brokencrimp.app/values-it/strings.commonMain.cvr',
