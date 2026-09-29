@@ -29,7 +29,7 @@ string|action_save|U2FsdmE=
 string|action_share|Q29uZGl2aWRp
 string|add_photo_link|QWdnaXVuZ2kgdW5hIGZvdG8gZGEgcmljYWxjYXJl
 string|backup_done|QmFja3VwIHNhbHZhdG8=
-string|backup_failed|SW1wb3NzaWJpbGUgc2FsdmFyZSBpbCBiYWNrdXA=
+string|backup_failed|SW1wb3NzaWJpbGUgc2FsdmFyZSBpbCBiYWNrdXAgKCUxJHMp
 string|backup_saving_body|U2NyaXR0dXJhIGRlbGxlIHR1ZSB2aWUgbmVsIGZpbGU=
 string|backup_saving_title|QmFja3VwIGluIGNvcnNv4oCm
 string|banner_done|RmluZQ==
