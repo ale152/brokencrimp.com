@@ -14,7 +14,7 @@ title: "Privacy Policy for Broken Crimp"
 {:toc}
 </nav>
 
-**Last updated: 24 September 2026**
+**Last updated: 29 September 2026**
 
 Broken Crimp ("the app") is a notebook for sport climbers and boulderers. You use it
 to record climbs and to draw **beta maps** — move-by-move sequences over a picture of
@@ -27,6 +27,9 @@ It comes in two forms, and this policy covers both:
   [www.brokencrimp.com/app/](https://www.brokencrimp.com/app/) and, for now, also at
   [www.alessandromasullo.com/broken-crimp/app/](https://www.alessandromasullo.com/broken-crimp/app/).
 
+It also covers the pages of [www.brokencrimp.com](https://www.brokencrimp.com/) itself,
+such as its home page and this policy.
+
 This policy explains what happens to information when you use the app. In short:
 
 > **The climbs, photos, voice notes and notes you create stay on your device. They
@@ -38,8 +41,9 @@ This policy explains what happens to information when you use the app. In short:
 > climb list only. To show ads, Google collects certain information about your device
 > or browser, described in section 5 below.**
 >
-> **The web version also uses Google Analytics to count how many people use it and
-> which screens they open, described in section 4. The Android app does not.**
+> **The web version, and the pages of www.brokencrimp.com, also use Google Analytics to
+> count how many people visit and which screens and pages they open, described in
+> section 4. The Android app does not.**
 
 Where the two versions differ, this policy says so. Where it does not say so, they
 behave the same way.
@@ -161,12 +165,15 @@ picker, which hands the app the one file you selected and nothing else.
 or your climbing. Your content is not backed up to us, and we cannot see it, in either
 version.
 
-**In the web version, usage statistics, through Google Analytics.** They tell us how many
-people use the web version and which screens they open, so we can see what is used and
-what is not. For this, Google Analytics collects:
+**In the web version and on the pages of www.brokencrimp.com, usage statistics, through
+Google Analytics.** They tell us how many people use the web version and visit the site,
+and which screens and pages they open, so we can see what is used and what is not. For
+this, Google Analytics collects:
 
 * which **screen** of the app is open (for example the climb list, a climb, or the export
   screen) — never which climb, and never anything you have written, drawn or recorded;
+* which **page** of www.brokencrimp.com you are reading (for example the home page or
+  this policy), and the page or search that brought you there;
 * **device and browser information**, such as browser, operating system, screen size and
   language;
 * an approximate **location** (country or city), derived from your IP address; Google
@@ -183,7 +190,9 @@ sites and apps*, linked in section 5.
 If you are in the European Economic Area, the United Kingdom or Switzerland, Google
 Analytics is not loaded at all unless you consent to it in the same consent form the ads
 use, and you can change that answer in the same place (**Settings → Your data → Change
-your ad choices**). Anywhere, blocking or clearing this site's cookies stops it, and
+your ad choices**). The pages of www.brokencrimp.com show the same form, and one answer
+covers both those pages and the web version at www.brokencrimp.com/app/, because they are
+one website; on those pages, **Privacy choices** at the foot of the page opens it again. Anywhere, blocking or clearing this site's cookies stops it, and
 Google offers a browser add-on to opt out of Google Analytics on every site:
 https://tools.google.com/dlpage/gaoptout
 
@@ -256,7 +265,8 @@ For details of how Google handles this information, see:
 Before any ad is requested, the app presents a consent form, so you can choose whether your data is used for personalised
 advertising. In the Android app the form is provided by Google's User Messaging
 Platform; in the web version by Google's Funding Choices (the "Privacy & messaging"
-consent tool). It is shown the first time you open the app, after the welcome card. Ads
+consent tool). It is shown the first time you open the app, after the welcome card, or on the first
+page of www.brokencrimp.com you visit, if that comes first. Ads
 are still shown if you decline, but they are not personalised. The legal basis for processing advertising data is your consent, which you may withdraw
 at any time from the Settings page.
 
