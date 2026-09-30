@@ -108,6 +108,16 @@
     });
   }, 200);
 
+  // No TC data is not always silence (S305). An inactive tool, which is what Google serves
+  // while AdSense is still reviewing the site, has no data to give anyone, but its `ping`
+  // still says whether this reader is in scope. Out of scope, no consent is owed, so that
+  // is an answer; in scope, or no word either way, it stays a no.
+  function measureFromPing() {
+    window.__tcfapi('ping', 2, function (ping) {
+      done(false, !!ping && ping.cmpLoaded === true && ping.gdprApplies === false);
+    });
+  }
+
   window.googlefc = window.googlefc || {};
   window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
   window.googlefc.callbackQueue.push({
@@ -115,7 +125,7 @@
       if (typeof window.__tcfapi === 'function') {
         window.__tcfapi('getTCData', 2, function (tcData, success) {
           if (success && tcData) done(tcData.gdprApplies, measureOf(tcData));
-          else done(false, false);
+          else measureFromPing();
         });
       } else {
         done(false, true);
