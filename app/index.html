@@ -254,6 +254,35 @@
             }
         })();
     </script>
+    <script>
+        (function () {
+            function isField(node) {
+                return !!node && (node.tagName === 'INPUT' || node.tagName === 'TEXTAREA');
+            }
+            // Compose's own nodes live in a shadow root; the page's never do.
+            function composeRoot(node) {
+                var root = node && node.getRootNode ? node.getRootNode() : null;
+                return root && root !== document && root.host ? root : null;
+            }
+            var focus = HTMLElement.prototype.focus;
+            HTMLElement.prototype.focus = function () {
+                var root = isField(this) && composeRoot(this);
+                if (root && root.activeElement === this) return;
+                return focus.apply(this, arguments);
+            };
+            // Bubbling at the window runs after Compose's own listener, so `defaultPrevented`
+            // already says whether it consumed the release.
+            var tapped = null;
+            window.addEventListener('pointerup', function (e) {
+                tapped = e.pointerType !== 'mouse' && e.defaultPrevented
+                    ? composeRoot(e.composedPath()[0]) : null;
+            });
+            window.addEventListener('touchend', function (e) {
+                if (tapped && isField(tapped.activeElement) && e.cancelable) e.preventDefault();
+                tapped = null;
+            }, { capture: true, passive: false });
+        })();
+    </script>
     <style>
         /* The ground under the app, painted before a single frame is drawn — so it has to be
            the ground the app is about to paint, in whichever theme the reader is in. The two
