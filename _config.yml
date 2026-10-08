@@ -6,5 +6,8 @@ url: https://www.brokencrimp.com
 markdown: kramdown
 kramdown:
   auto_ids: true
+# /sitemap.xml, and a robots.txt naming it, every address built from `url` above (S327).
+plugins:
+  - jekyll-sitemap
 exclude:
   - README.md
