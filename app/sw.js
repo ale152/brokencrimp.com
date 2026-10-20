@@ -69,8 +69,20 @@ self.addEventListener('install', (event) => {
     // install and leaves the previous worker (or none) in charge. That is the right failure: a
     // half-precached app is an app that opens offline and then dies at the first thing it
     // reaches for, which is worse than one that plainly needs the network.
+    //
+    // **Every file is fetched past the browser's HTTP cache** (`cache: 'reload'`, 2026-10-20).
+    // GitHub Pages serves everything `max-age=600`, and a plain `addAll` goes through that cache,
+    // so a browser that had fetched the string table from the NETWORK in the ten minutes before a
+    // deploy (a first visit, a hard reload, any load the worker did not control; a page the worker
+    // does control reads its cache and never refreshes that entry) got a new worker holding the
+    // NEW content-hashed wasm beside the OLD string table, which keeps its name across builds.
+    // Compose reads a string by its byte offset in that table, so every string in the app came
+    // out blank — the owner's Firefox, on release 8, with an empty What's new card — and stayed
+    // blank across reloads, because the worker serves its cache first. A file that keeps its
+    // name is exactly what the HTTP cache may answer for, so none of them may be asked that way.
     event.waitUntil(
-        caches.open(CACHE).then((cache) => cache.addAll(FILES)),
+        caches.open(CACHE).then((cache) =>
+            cache.addAll(FILES.map((file) => new Request(file, { cache: 'reload' })))),
     );
     // **`skipWaiting` is safe HERE, and that is a measurement about this app rather than a
     // general opinion** (S228). The usual objection is real: a worker that seizes a running tab
