@@ -114,7 +114,7 @@
          * own error exactly as it did before this existed.
          */
         (function () {
-            var wasm = /*__BOOT_WASM__*/{"58048078aae4213ff272.wasm":8130997,"6e23e5428398b92da386.wasm":8652729};
+            var wasm = /*__BOOT_WASM__*/{"0915f0373fc311394183.wasm":8993763,"6e23e5428398b92da386.wasm":8652729};
             var root = document.documentElement;
             function unmeasured() { root.removeAttribute('data-boot'); }
             try {
@@ -255,6 +255,35 @@
         })();
     </script>
     <script>
+        /*
+         * **The keyboard on iOS: two Compose 1.11 bugs, fixed from the page** (2026-10-02).
+         *
+         * A reader reported that the text fields never raise the keyboard on iOS. Compose types
+         * into a hidden `<input>` inside its shadow root, and on iOS that input loses the keyboard
+         * twice over. Both rules below are JetBrains' own fixes, applied here because the fixed
+         * Compose (1.12.2) is not published yet and moving off 1.11.x moves the Android app's
+         * Compose too (`libs.versions.toml`). Remove them once the app is on a Compose with both.
+         *
+         * 1. **An input that already has focus is not focused again** (iOS 27; CMP-10825, reported
+         *    for 1.11.1 as CMP-10858; compose-multiplatform-core #3446). A tap on a field calls
+         *    `focus()` up to four times: once inside the tap, the rest in the same tap and in
+         *    `requestAnimationFrame`. Since iOS 27 a newer focus request replaces a pending one,
+         *    and one made outside a tap cancels the keyboard. Skipping a call on an element that
+         *    is already active changes nothing in any browser.
+         * 2. **A tap that focused a text field ends with `touchend` cancelled** (every iOS;
+         *    narrower than 1.12's own `touchend` listener, CMP-10079). Safari follows a tap with
+         *    emulated mouse events even when `pointerdown` was cancelled, and their `mousedown`
+         *    lands on Compose's canvas, which is focusable: the input loses focus and the keyboard
+         *    closes again. Cancelling the `touchend` stops those events. 1.12 cancels it after
+         *    every tap Compose consumed; this does it only when the tap left one of Compose's
+         *    inputs focused, so every other tap keeps the `mousedown` that gives the canvas focus,
+         *    which is how a hardware keyboard's keys reach Compose (its key listeners are on the
+         *    canvas). A tap while a field is already focused is unchanged too: Compose cancels its
+         *    `touchstart` then, which already stops the mouse events.
+         *
+         * Measured on the iOS 26.5 simulator against this page without the script: the keyboard
+         * opened on the tap and closed 0.6 s later, at Safari's `mousedown` on the canvas.
+         */
         (function () {
             function isField(node) {
                 return !!node && (node.tagName === 'INPUT' || node.tagName === 'TEXTAREA');
