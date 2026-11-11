@@ -1,0 +1,32 @@
+title: Broken Crimp
+description: Map your beta. Never forget a move.
+url: https://www.brokencrimp.com
+markdown: kramdown
+kramdown:
+  auto_ids: true
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+permalink: /blog/:title/
+collections:
+  climbs:
+    output: true
+    permalink: /climbs/:name/
+  guides:
+    output: true
+    permalink: /guides/:name/
+defaults:
+  - scope:
+      type: posts
+    values:
+      layout: post
+  - scope:
+      type: climbs
+    values:
+      layout: climb
+  - scope:
+      type: guides
+    values:
+      layout: guide
+exclude:
+  - README.md

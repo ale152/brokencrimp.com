@@ -1,0 +1,1 @@
+<figure class="shot{% if include.wide %} wide{% endif %}"><img src="/assets/guides/{{ page.slug }}/{{ include.src }}.webp" width="{{ include.width | default: 540 }}" height="{{ include.height | default: 1102 }}" alt="{{ include.alt }}" loading="lazy">{% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}</figure>

@@ -1,0 +1,45 @@
+- category: "Holds"
+  items:
+    - {key: HANDHOLD, name: "Handhold", what: "Any hold for the hand, when its exact type does not matter or is not worth saying."}
+    - {key: JUG, name: "Jug", what: "A big, positive hold the whole hand can wrap over.", also: "bucket"}
+    - {key: CRIMP, name: "Crimp", what: "A small edge with room for little more than the fingertips.", also: "edge"}
+    - {key: SLOPER, name: "Sloper", what: "A rounded hold with no edge to pull on. It relies on friction, and works best with the body low beneath it."}
+    - {key: PINCH, name: "Pinch", what: "A hold gripped between the thumb and the fingers, with the thumb doing as much of the work as the fingers."}
+    - {key: POCKET, name: "Pocket", what: "A hole in the rock or in an indoor hold.", also: "mono"}
+    - {key: SLOT, name: "Slot", what: "A horizontal opening in the rock that the fingers or the hand go into."}
+    - {key: UNDERCLING, name: "Undercling", what: "A hold that faces downwards, pulled from underneath with the palm up.", also: "undercut"}
+    - {key: SIDEPULL, name: "Sidepull", what: "A hold that faces sideways, pulled towards the body."}
+    - {key: HORN, name: "Horn", what: "A spike of rock that sticks out of the wall. It can be gripped, and a sling can go around it for protection.", also: "spike, chickenhead"}
+    - {key: FLAKE, name: "Flake", what: "A thin slab of rock partly detached from the wall, leaving an edge to pull on."}
+    - {key: RAIL, name: "Rail", what: "A long horizontal edge that the hands can shuffle along."}
+    - {key: LEDGE, name: "Ledge", what: "A wide, flat shelf in the rock, sometimes big enough to stand on.", also: "shelf"}
+    - {key: PEBBLE, name: "Pebble", what: "A small stone set in the rock, common on conglomerate and on some granite."}
+    - {key: UNKNOWN, name: "Unknown", what: "A hold whose type you have not worked out yet, or that fits none of these."}
+    - {key: SMILEY, name: "Smiley", what: "A hold with a smiley face on it."}
+- category: "Features"
+  items:
+    - {key: TUFA, name: "Tufa", what: "A column of limestone that hangs down a wall, formed by water over a long time. Tufas can be pinched, hugged or bridged between."}
+    - {key: CRACK, name: "Crack", what: "A split in the rock, climbed by jamming fingers, hands or feet inside it. Cracks also take most trad protection."}
+    - {key: ARETE, name: "Arête", what: "An outward corner, where two faces of rock meet in an edge."}
+    - {key: DIHEDRAL, name: "Dihedral", what: "An inward corner, where two faces of rock meet like an open book.", also: "corner, open book"}
+    - {key: VOLUME, name: "Volume", what: "A large shape bolted to an indoor wall. It can be a hold in its own right, and it changes how the holds on it can be used."}
+    - {key: DUAL_TEX, name: "Dual tex", what: "An indoor hold or volume with both smooth and rough areas, which changes where it can be held.", also: "dual texture"}
+    - {key: DROP, name: "Drop", what: "A large, curved indoor feature, often as big as a volume. Despite the name, most are shaped more like a banana than a drop."}
+- category: "Feet"
+  items:
+    - {key: FOOTHOLD, name: "Foothold", what: "Any hold used for the feet, often far smaller than anything a hand would use.", also: "foot chip"}
+    - {key: SMEAR, name: "Smear", what: "A patch of rock with no hold, where the foot stays on through friction alone."}
+    - {key: HEEL_SPOT, name: "Heel spot", what: "A place to hook a heel."}
+    - {key: KNEE_BAR_SPOT, name: "Kneebar spot", what: "A place where a leg can wedge between a foot and a knee, often good enough to rest on."}
+- category: "Protection"
+  items:
+    - {key: BOLT, name: "Bolt", what: "A permanent anchor drilled into the rock."}
+    - {key: ANCHOR, name: "Anchor", what: "The fixed point at the end of a climb or a pitch, where the climber can be lowered or belay.", also: "chain, belay station"}
+    - {key: CAM, name: "Cam", what: "A spring-loaded device that expands inside a crack and holds a fall by pressing outwards against its sides.", also: "friend"}
+    - {key: NUT, name: "Nut", what: "A metal wedge on a wire, slotted into a place where a crack narrows.", also: "stopper, rock, wire"}
+    - {key: HEX, name: "Hex", what: "A six-sided metal chock that wedges or twists into a crack.", also: "hexentric"}
+    - {key: TRICAM, name: "Tricam", what: "A small pivoting chock, useful in pockets and in shapes a cam will not fit."}
+    - {key: SLING, name: "Sling", what: "A loop of tape put around a spike, through a thread or around a tree, as protection or to extend a piece of gear.", also: "runner"}
+    - {key: PITON, name: "Piton", what: "A metal spike hammered into a crack. Many are old fixed gear found on historic climbs.", also: "peg"}
+    - {key: BALL_NUT, name: "Ball nut", what: "A sliding device for very thin cracks."}
+    - {key: BIG_BRO, name: "Big Bro", what: "A spring-loaded tube that expands across a very wide crack."}

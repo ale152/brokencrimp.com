@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<article class="post">
+  <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}{% if page.author %} · {{ page.author }}{% endif %}</time>
+  <h1>{{ page.title }}</h1>
+{{ content }}
+</article>
+{% include get-app.html %}
+<p class="small"><a href="/blog/">More from the blog</a></p>

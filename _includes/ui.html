@@ -1,0 +1,1 @@
+{%- if include.button -%}<img class="ui-icon{% if include.button == 'move' %} wide{% endif %}" src="/assets/ui/button-{{ include.button }}.svg" alt="" aria-hidden="true" width="{% if include.button == 'move' %}35{% else %}22{% endif %}" height="22">{%- else -%}{%- capture glyph %}ui/{{ include.name }}.svg{% endcapture -%}{%- include {{ glyph }} -%}{%- endif -%}

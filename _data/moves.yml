@@ -1,0 +1,31 @@
+- {key: BAT_HANG, name: "Bat hang", limbs: [foot, body], what: "Hanging upside down from the feet or legs, with the head below the hips. It can give the arms a rest under a roof."}
+- {key: BICYCLE, name: "Bicycle", limbs: [foot], what: "One foot pushes down on a hold while the other toe pulls up on it from below or behind.", also: "toe-hook bicycle"}
+- {key: BUMP, name: "Bump", limbs: [hand], what: "A hand moves from one hold to another close by, in one extra move, without the other hand changing."}
+- {key: CLIP, name: "Clip", limbs: [hand], what: "Putting the rope through a quickdraw on a bolt."}
+- {key: CRIMP, name: "Crimp", limbs: [hand], what: "Holding on with the fingertips. The word also names a type of hold."}
+- {key: CROSS, name: "Cross through", limbs: [hand], what: "One hand reaches past the other, crossing over or under it, to the next hold.", also: "crossover"}
+- {key: DEADPOINT, name: "Deadpoint", limbs: [body], what: "A dynamic reach that catches the hold at the top of the movement, in the moment the body is weightless. At least one point stays on the wall."}
+- {key: DROP_KNEE, name: "Drop knee", limbs: [foot], what: "With the foot on a hold, the knee turns inward and down, bringing the hip closer to the wall."}
+- {key: DYNO, name: "Dyno", limbs: [body], what: "A jump to a hold that is out of static reach, usually with all or most of the body leaving the wall."}
+- {key: EDGING, name: "Edge", limbs: [foot], what: "Standing on a hold with the edge of the shoe."}
+- {key: FLAG, name: "Flag", limbs: [foot], what: "One leg reaches out against the wall to balance the body, with no hold under it."}
+- {key: GASTON, name: "Gaston", limbs: [hand], what: "Pushing a hold outward with the elbow out and the thumb down, like opening a lift door."}
+- {key: GRAB, name: "Grab", limbs: [hand], what: "A hand takes hold, with no particular grip named."}
+- {key: GUPPY, name: "Guppy", limbs: [hand], what: "A pinch taken from above."}
+- {key: HEEL_HOOK, name: "Heel hook", limbs: [foot], what: "The heel goes on a hold and pulls."}
+- {key: JAM, name: "Jam", limbs: [hand, foot, body], what: "A hand, a foot or the whole body wedged into a crack."}
+- {key: KNEE_BAR, name: "Kneebar", limbs: [foot], what: "The leg wedges between a foot on one hold and the knee against another. A good one can take the weight off the hands."}
+- {key: LAYBACK, name: "Layback", limbs: [body], what: "Leaning away from an edge, pulling on it with the hands while the feet push against the wall.", also: "lieback"}
+- {key: LET_GO, name: "Let go", limbs: [hand, foot], what: "A hand or a foot comes off the hold it is on, on purpose."}
+- {key: MANTLE, name: "Mantle", limbs: [body], what: "Pressing down on a ledge with the hands to get the body up above it."}
+- {key: MATCH, name: "Match", limbs: [hand], what: "Both hands on the same hold."}
+- {key: MOVE, name: "Move", limbs: [body], what: "The body shifts to a new position with no limb changing hold."}
+- {key: PINCH, name: "Pinch", limbs: [hand], what: "Squeezing a hold between the thumb and the fingers. The word also names a type of hold."}
+- {key: PLACE_GEAR, name: "Place gear", limbs: [hand], what: "Putting a cam, a nut or another piece of protection into the rock."}
+- {key: ROCKOVER, name: "Rockover", limbs: [body], what: "Shifting the weight over a high foot.", also: "high step"}
+- {key: SHAKE, name: "Shake", limbs: [hand], what: "Taking one hand off the wall and shaking it to rest.", also: "shake out"}
+- {key: SMEAR, name: "Smear", limbs: [foot], what: "Pressing the foot against the rock, with friction alone keeping it there. The word also names a place on the wall."}
+- {key: STEM, name: "Stem", limbs: [body], what: "Pushing out against two opposing faces with the hands or the feet.", also: "bridge, chimney"}
+- {key: STEP_ON, name: "Step on", limbs: [foot], what: "A foot goes onto a hold."}
+- {key: TOE_CAM, name: "Toe cam", limbs: [foot], what: "The toe pushes against one surface while the heel braces against another, wedging the foot."}
+- {key: TOE_HOOK, name: "Toe hook", limbs: [foot], what: "The top of the foot hooks behind a hold or a feature and pulls."}

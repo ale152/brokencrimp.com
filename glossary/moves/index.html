@@ -1,0 +1,12 @@
+---
+layout: default
+title: Climbing moves
+permalink: /glossary/moves/
+description: What a gaston, a drop knee, a heel hook and the other moves in Broken Crimp mean.
+---
+<p class="eyebrow"><a href="/glossary/">Glossary</a></p>
+<h1>Climbing moves</h1>
+<p>These are the moves you can name on a beta in Broken Crimp, with the limbs each one applies to. Each picture is that move on a beta. LH, RH, LF and RF are the hands and feet, BD is the body, and the number says which move it is.</p>
+{% for move in site.data.moves %}<div class="term has-picture" id="{{ move.name | slugify }}"><div class="move-picture" data-clip="/assets/moves/{{ move.key | downcase }}.mp4"><img src="/assets/moves/{{ move.key | downcase }}.webp" alt="{{ move.name }} on a beta in Broken Crimp" width="630" height="630" loading="lazy"></div><div><h3>{{ move.name }}</h3><p class="limbs">{{ move.limbs | join: ", " | capitalize }}{% if move.also %} · Also: {{ move.also }}{% endif %}</p><p>{{ move.what }}</p></div></div>
+{% endfor %}
+<script src="/assets/move-clips.js" defer></script>

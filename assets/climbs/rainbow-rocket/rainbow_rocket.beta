@@ -1,0 +1,236 @@
+{
+  "format": "brokencrimp.beta",
+  "version": 8,
+  "project": {
+    "name": "Rainbow Rocket",
+    "grade": "8A (V11)",
+    "style": "BOULDER",
+    "location": "Franchard Sablons Carriers, Fontainebleau, France",
+    "notes": "",
+    "colorIndex": 4,
+    "holdScale": 1,
+    "photoScale": 1,
+    "photoOffsetX": 0,
+    "photoOffsetY": 0,
+    "photoRotation": 0,
+    "photoAlpha": 0.550000011920929,
+    "photoSaturation": 0.30000001192092896
+  },
+  "placements": [
+    {
+      "localId": 0,
+      "type": "FOOTHOLD",
+      "x": -70,
+      "y": -190,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 1,
+      "type": "FOOTHOLD",
+      "x": 75,
+      "y": -240,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 2,
+      "type": "LEDGE",
+      "customName": "Ledge",
+      "x": -140,
+      "y": -747,
+      "rotation": 0,
+      "scale": 1.5
+    },
+    {
+      "localId": 3,
+      "type": "LEDGE",
+      "customName": "Ledge",
+      "x": -45,
+      "y": -747,
+      "rotation": 0,
+      "scale": 1.5
+    },
+    {
+      "localId": 4,
+      "type": "RAIL",
+      "customName": "Crack",
+      "x": 55,
+      "y": -747,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 5,
+      "type": "LEDGE",
+      "customName": "Top",
+      "x": -25,
+      "y": -1718,
+      "rotation": 0,
+      "scale": 1.399999976158142
+    },
+    {
+      "localId": 6,
+      "type": "LEDGE",
+      "customName": "Top",
+      "x": 55,
+      "y": -1718,
+      "rotation": 0,
+      "scale": 1.399999976158142
+    },
+    {
+      "localId": 7,
+      "type": "SMEAR",
+      "x": -60,
+      "y": -1290,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 8,
+      "type": "SMEAR",
+      "x": 80,
+      "y": -1310,
+      "rotation": 0,
+      "scale": 1
+    }
+  ],
+  "sections": [],
+  "betas": [
+    {
+      "name": "Foot stomp",
+      "climberHeight": 0.7329999804496765,
+      "steps": [
+        {
+          "orderIndex": 0,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 3,
+          "action": "GRAB",
+          "note": "Start hanging from the break: left hand on the good ledge, right hand in the crack beside it."
+        },
+        {
+          "orderIndex": 1,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 4,
+          "action": "GRAB",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 2,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 0,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 3,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 1,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 4,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 2,
+          "action": "STEP_ON",
+          "note": "Jump, and stomp the left foot onto the ledge at hand height while already moving up. Learning this step is the hard part.",
+          "tags": [
+            "CRUX"
+          ],
+          "bodyX": -15,
+          "bodyY": -575,
+          "pause": 0
+        },
+        {
+          "orderIndex": 5,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 1,
+          "action": "LET_GO",
+          "joinsPrevious": true,
+          "pause": 0
+        },
+        {
+          "orderIndex": 6,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 3,
+          "action": "LET_GO",
+          "note": "Push off the foot and let go. Every hand and foot is off the rock, with 2.6 m to cover and nothing in between.",
+          "tags": [
+            "CRUX"
+          ],
+          "bodyX": 10,
+          "bodyY": -1240,
+          "pause": 0,
+          "pose": "1;672.000,41.664,24.490,-1451.485,20.551,-1376.324,10.000,-1175.000,-47.260,-1366.419,86.955,-1359.385,-62.692,-1476.220,94.690,-1469.995,-51.804,-1579.809,91.055,-1574.092,-31.607,-1177.181,51.607,-1172.819,-60.780,-1011.733,130.478,-1024.484,-49.529,-850.846,75.317,-872.931;0"
+        },
+        {
+          "orderIndex": 7,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 4,
+          "action": "LET_GO",
+          "joinsPrevious": true,
+          "pause": 0
+        },
+        {
+          "orderIndex": 8,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 2,
+          "action": "LET_GO",
+          "joinsPrevious": true,
+          "pause": 0
+        },
+        {
+          "orderIndex": 9,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 6,
+          "action": "DYNO",
+          "note": "Catch the top of the wall with both hands and hold the swing."
+        },
+        {
+          "orderIndex": 10,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 5,
+          "action": "GRAB",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 11,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 8,
+          "action": "SMEAR",
+          "note": "Walk the feet up the wall."
+        },
+        {
+          "orderIndex": 12,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 7,
+          "action": "SMEAR",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 13,
+          "kind": "MOVE",
+          "limb": "BODY",
+          "action": "MANTLE",
+          "note": "Press out over the top.",
+          "x": 15,
+          "y": -1698
+        }
+      ]
+    }
+  ]
+}

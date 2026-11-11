@@ -1,0 +1,24 @@
+---
+layout: default
+title: Famous climbs
+nav: Climbs
+nav_order: 1
+permalink: /climbs/
+description: The moves of famous climbs, animated move by move, with the sources behind each one.
+blurb: Silence, Burden of Dreams and more, animated move by move, with their sources.
+---
+<h1>Famous climbs</h1>
+<p>The moves of some of the world's best known climbs, animated move by move and open to anyone to read. Every page lists the sources it was put together from.</p>
+<p>To see a climb move by move, download its .beta file from its page and open it in Broken Crimp with <strong>Import .beta file</strong>, the icon {% include ui.html name="import" %} at the top of the climb list. Then play it, step through it, or change it to fit your own beta. Silence, Burden of Dreams and DNA already come with the app. <a href="/guides/share-a-climb/#4-the-other-person-opens-it">How to import a climb</a> shows each step.</p>
+<ul class="post-list">
+  {% assign climbs = site.climbs | sort: "order" %}
+  {% for climb in climbs %}
+  <li class="climb-item">
+    <a class="climb-shot" href="{{ climb.url }}" tabindex="-1" aria-hidden="true"><img src="/assets/climbs/{{ climb.slug }}/screen.webp" alt="" width="540" height="1200" loading="lazy"></a>
+    <div>
+      <h2><a href="{{ climb.url }}">{{ climb.title }}</a></h2>
+      <p>{{ climb.grade }} · {{ climb.where }}</p>
+    </div>
+  </li>
+  {% endfor %}
+</ul>

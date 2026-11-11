@@ -1,0 +1,645 @@
+{
+  "format": "brokencrimp.beta",
+  "version": 7,
+  "project": {
+    "name": "Action Directe",
+    "grade": "9a (5.14d)",
+    "style": "SPORT",
+    "location": "Waldkopf, Frankenjura, Germany",
+    "notes": "",
+    "colorIndex": 0,
+    "holdScale": 1,
+    "photoScale": 1,
+    "photoOffsetX": 0,
+    "photoOffsetY": 0,
+    "photoRotation": 0,
+    "photoAlpha": 0.550000011920929,
+    "photoSaturation": 0.30000001192092896
+  },
+  "placements": [
+    {
+      "localId": 0,
+      "type": "LEDGE",
+      "customName": "Ledge",
+      "x": -70,
+      "y": -1120,
+      "rotation": 0,
+      "scale": 1.600000023841858
+    },
+    {
+      "localId": 1,
+      "type": "FOOTHOLD",
+      "customName": "Right foothold",
+      "x": 95,
+      "y": -1235,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 2,
+      "type": "PINCH",
+      "customName": "Start pinch",
+      "x": 105,
+      "y": -1700,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 3,
+      "type": "POCKET",
+      "customName": "Start mono",
+      "x": -75,
+      "y": -1850,
+      "rotation": 0,
+      "scale": 0.699999988079071
+    },
+    {
+      "localId": 4,
+      "type": "POCKET",
+      "customName": "Jump pocket",
+      "x": 185,
+      "y": -2345,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 5,
+      "type": "POCKET",
+      "customName": "Left pocket",
+      "x": -45,
+      "y": -2575,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 6,
+      "type": "POCKET",
+      "customName": "Right pocket",
+      "x": 195,
+      "y": -2815,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 7,
+      "type": "POCKET",
+      "customName": "Upper mono",
+      "x": -130,
+      "y": -3085,
+      "rotation": 0,
+      "scale": 0.699999988079071
+    },
+    {
+      "localId": 8,
+      "type": "CRIMP",
+      "customName": "Crimp",
+      "x": 115,
+      "y": -3335,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 9,
+      "type": "SIDEPULL",
+      "customName": "Side hold",
+      "x": -75,
+      "y": -3570,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 10,
+      "type": "POCKET",
+      "customName": "Two-finger pocket",
+      "x": 150,
+      "y": -3805,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 11,
+      "type": "PINCH",
+      "customName": "Crossover pinch",
+      "x": 265,
+      "y": -4035,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 12,
+      "type": "CRIMP",
+      "customName": "Upper crimp",
+      "x": 420,
+      "y": -4250,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 13,
+      "type": "UNDERCLING",
+      "customName": "Side undercling",
+      "x": 270,
+      "y": -4455,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 14,
+      "type": "CRIMP",
+      "customName": "Lip crimp",
+      "x": 430,
+      "y": -4855,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 15,
+      "type": "JUG",
+      "customName": "Top ledge",
+      "x": 300,
+      "y": -5075,
+      "rotation": 0,
+      "scale": 1.2000000476837158
+    },
+    {
+      "localId": 16,
+      "type": "ANCHOR",
+      "x": 365,
+      "y": -5195,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 17,
+      "type": "FOOTHOLD",
+      "x": -50,
+      "y": -1620,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 18,
+      "type": "FOOTHOLD",
+      "x": 170,
+      "y": -1830,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 19,
+      "type": "FOOTHOLD",
+      "x": -20,
+      "y": -2015,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 20,
+      "type": "FOOTHOLD",
+      "x": 80,
+      "y": -3650,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 21,
+      "type": "FOOTHOLD",
+      "x": 390,
+      "y": -3830,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 22,
+      "type": "FOOTHOLD",
+      "x": 180,
+      "y": -4080,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 23,
+      "type": "FOOTHOLD",
+      "x": 430,
+      "y": -4600,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 24,
+      "type": "FOOTHOLD",
+      "x": -60,
+      "y": -2200,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 25,
+      "type": "FOOTHOLD",
+      "x": 200,
+      "y": -2480,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 26,
+      "type": "FOOTHOLD",
+      "x": -90,
+      "y": -2740,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 27,
+      "type": "FOOTHOLD",
+      "x": 190,
+      "y": -2990,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 28,
+      "type": "FOOTHOLD",
+      "x": -110,
+      "y": -3230,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 29,
+      "type": "FOOTHOLD",
+      "x": 250,
+      "y": -3480,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 30,
+      "type": "FOOTHOLD",
+      "x": 230,
+      "y": -4230,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 31,
+      "type": "FOOTHOLD",
+      "x": 440,
+      "y": -4440,
+      "rotation": 0,
+      "scale": 1
+    }
+  ],
+  "sections": [],
+  "betas": [
+    {
+      "name": "Short sequence",
+      "climberHeight": 1.0285999774932861,
+      "steps": [
+        {
+          "orderIndex": 0,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 3,
+          "action": "GRAB",
+          "note": "Stand on the ledge under the prow. Left hand reaches up to a sharp, shallow mono, right hand takes a poor pinch."
+        },
+        {
+          "orderIndex": 1,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 2,
+          "action": "PINCH",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 2,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 0,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 3,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 1,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 4,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 4,
+          "action": "DYNO",
+          "note": "The jump. Set the right foot, launch off the mono and stick the two-finger pocket with the right hand. The feet cut loose and swing out.",
+          "tags": [
+            "CRUX"
+          ]
+        },
+        {
+          "orderIndex": 5,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 0,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 6,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 1,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 7,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 17,
+          "action": "STEP_ON",
+          "note": "Kill the swing and get the feet back on the wall.",
+          "tilt": -7,
+          "bodyX": 92,
+          "bodyY": -1982
+        },
+        {
+          "orderIndex": 8,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 18,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 9,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 5,
+          "action": "GRAB",
+          "note": "Lock off the pocket and go left hand to a small pocket. The feet follow the hands, mostly onto the pockets the hands have left.",
+          "bodyX": 48,
+          "bodyY": -2222
+        },
+        {
+          "orderIndex": 10,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 19,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 11,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 6,
+          "action": "GRAB",
+          "note": "Another lock-off, right hand to a pocket."
+        },
+        {
+          "orderIndex": 12,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 4,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 13,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 24,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 14,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 7,
+          "action": "GRAB",
+          "note": "A longer move left to a mono. Easy to miss."
+        },
+        {
+          "orderIndex": 15,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 5,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 16,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 25,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 17,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 8,
+          "action": "CRIMP",
+          "note": "Right hand to a crimp. The pockets thin out here."
+        },
+        {
+          "orderIndex": 18,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 6,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 19,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 26,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 20,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 9,
+          "action": "GRAB",
+          "note": "Left hand to a side hold."
+        },
+        {
+          "orderIndex": 21,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 7,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 22,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 27,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 23,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 10,
+          "action": "GRAB",
+          "note": "Right hand to a two-finger pocket."
+        },
+        {
+          "orderIndex": 24,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 8,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 25,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 28,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 26,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 11,
+          "action": "CROSS",
+          "note": "Cross the left hand over."
+        },
+        {
+          "orderIndex": 27,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 20,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 28,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 29,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 29,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 12,
+          "action": "CRIMP",
+          "note": "Unwind to a crimp out right."
+        },
+        {
+          "orderIndex": 30,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 21,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 31,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 13,
+          "action": "GRAB",
+          "note": "Left hand to a side undercling."
+        },
+        {
+          "orderIndex": 32,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 22,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 33,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 14,
+          "action": "DYNO",
+          "note": "The exit. One last jump to a crimp at the lip that is tricky to hit."
+        },
+        {
+          "orderIndex": 34,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 12,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 35,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 30,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 36,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 15,
+          "action": "GRAB",
+          "note": "Over the lip onto easy ground."
+        },
+        {
+          "orderIndex": 37,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 13,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 38,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 31,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 39,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 15,
+          "action": "MATCH"
+        },
+        {
+          "orderIndex": 40,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 23,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 41,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 16,
+          "action": "CLIP",
+          "note": "Clip the anchor."
+        }
+      ]
+    }
+  ]
+}

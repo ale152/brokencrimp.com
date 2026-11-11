@@ -1,0 +1,13 @@
+---
+layout: default
+title: Climbing holds, features and gear
+permalink: /glossary/holds/
+description: What a crimp, a sloper, a pinch and the rest of the 37 hold types in Broken Crimp mean.
+---
+<p class="eyebrow"><a href="/glossary/">Glossary</a></p>
+<h1>Climbing holds, features and gear</h1>
+<p>These are the 37 types you can place on a climb in Broken Crimp.</p>
+{% for group in site.data.holds %}
+<h2>{{ group.category }}</h2>
+{% for hold in group.items %}<div class="term has-art" id="{{ hold.name | slugify }}"><img src="/assets/holds/{{ hold.key | downcase }}.svg" alt="" width="72" height="72"><div><h3>{{ hold.name }}</h3>{% if hold.also %}<p class="limbs">Also: {{ hold.also }}</p>{% endif %}<p>{{ hold.what }}</p></div></div>
+{% endfor %}{% endfor %}

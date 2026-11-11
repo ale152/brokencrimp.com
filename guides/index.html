@@ -1,0 +1,21 @@
+---
+layout: default
+title: Guides
+nav: Guides
+nav_order: 2
+permalink: /guides/
+description: How to get things done in Broken Crimp, from a first climb to sharing a finished beta.
+blurb: How to map a climb, learn a sequence, compare betas and share them.
+---
+<h1>Guides</h1>
+<p>How to use Broken Crimp, one task at a time.</p>
+<ul class="post-list">
+  {% assign guides = site.guides | sort: "order" %}
+  {% for guide in guides %}
+  <li>
+    <h2><a href="{{ guide.url }}">{{ guide.title }}</a></h2>
+    <p>{{ guide.description }}</p>
+    <a class="section-picture" href="{{ guide.url }}" tabindex="-1" aria-hidden="true"><img src="/assets/guides/{{ guide.slug }}/cover.svg" alt="" width="1404" height="468" loading="lazy"></a>
+  </li>
+  {% endfor %}
+</ul>

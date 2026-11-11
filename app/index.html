@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Broken Crimp</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <meta name="theme-color" id="theme-color" content="#F5F1EA">
+    <meta name="color-scheme" content="light dark">
+    <script>
+         
+        window.brokenCrimpTheme = function (dark) {
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            var meta = document.getElementById('theme-color');
+            if (meta) meta.setAttribute('content', dark ? '#191817' : '#F5F1EA');
+        };
+        (function () {
+            var mode = 'LIGHT';
+            try {
+                var raw = window.localStorage.getItem('settings/themeMode');
+
+                if (raw && raw.slice(0, 2) === 's:') {
+                    var stored = raw.slice(2);
+                    if (stored === 'LIGHT' || stored === 'DARK' || stored === 'SYSTEM') mode = stored;
+                }
+            } catch (e) {   }
+            var dark = mode === 'DARK' || (mode === 'SYSTEM' &&
+                window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            window.brokenCrimpTheme(dark);
+        })();
+    </script>
+    <script>
+         
+        (function () {
+            var root = document.documentElement;
+            var runs;
+            try {
+                runs = typeof WebAssembly === 'object' && typeof WebAssembly.validate === 'function' &&
+                    WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]));
+            } catch (e) {
+                runs = true;   
+            }
+            if (!runs) {
+                root.setAttribute('data-cannot-start', 'browser');
+                var manifest = document.querySelector('link[rel="manifest"]');
+                if (manifest) manifest.parentNode.removeChild(manifest);
+                return;
+            }
+
+            var QUIET_MS = 60 * 1000;
+            var last = performance.now();
+            var timer = 0;
+            var shown = false;   
+            var over = false;    
+            function arm(ms) {
+                clearTimeout(timer);
+                timer = setTimeout(check, ms);
+            }
+            function check() {
+                timer = 0;
+                if (over || document.hidden) return;   
+                var quietFor = performance.now() - last;
+                if (quietFor < QUIET_MS) { arm(QUIET_MS - quietFor); return; }
+                shown = true;
+                root.setAttribute('data-cannot-start', 'quiet');
+            }
+            function progress() {
+                if (over) return;
+                last = performance.now();
+                if (shown) { shown = false; root.removeAttribute('data-cannot-start'); }
+                if (!timer && !document.hidden) arm(QUIET_MS);
+            }
+            window.brokenCrimpWatch = {
+                progress: progress,
+                
+                end: function () { over = true; clearTimeout(timer); }
+            };
+            
+            window.brokenCrimpStage = function () { progress(); };
+            document.addEventListener('visibilitychange', function () {
+                if (over) return;
+                if (document.hidden) { clearTimeout(timer); timer = 0; return; }
+                last = performance.now();
+                if (!shown) arm(QUIET_MS);
+            });
+            arm(QUIET_MS);
+        })();
+    </script>
+    <script>
+         
+        (function () {
+            var wasm =  {"6e23e5428398b92da386.wasm":8652729,"c4a2a29f061d5a74eb7b.wasm":9516550};
+            var root = document.documentElement;
+            var watch = window.brokenCrimpWatch;   
+            function unmeasured() { root.removeAttribute('data-boot'); }
+            try {
+                
+                if (root.getAttribute('data-cannot-start') === 'browser') return;
+                if (!wasm || !window.fetch || !window.ReadableStream || !window.Response) return;
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) return;
+
+                root.setAttribute('data-first-visit', '');
+                var names = Object.keys(wasm);
+                var total = 0;
+                for (var i = 0; i < names.length; i++) total += wasm[names[i]];
+                if (!total) return;
+
+                var DOWNLOAD_SHARE = 0.5;
+
+                var STAGES = [
+                    ['running', 0.55, 0.3],
+                    ['compose', 0.67, 0.8],
+                    ['words', 0.93, 1.8],
+                    ['store', 0.96, 0.1]
+                ];
+                var READY_SECONDS = 0.3;   
+                var reached = -1;          
+                function easeFrom(share, index) {
+                    var next = STAGES[index + 1];
+                    var target = next ? next[1] : 1;
+                    root.style.setProperty('--boot', String(share));
+                    
+                    root.style.setProperty('--boot-to', String(share + 0.85 * (target - share)));
+                    root.style.setProperty('--boot-secs', (2 * (next ? next[2] : READY_SECONDS)) + 's');
+                    
+                    root.setAttribute('data-boot', index % 2 ? 'toward-b' : 'toward-a');
+                }
+                var heard = window.brokenCrimpStage;   
+                window.brokenCrimpStage = function (name) {
+                    try {
+                        if (heard) heard(name);
+                        var state = root.getAttribute('data-boot');
+                        if (!state || state === 'done') return;
+                        for (var k = reached + 1; k < STAGES.length; k++) {
+                            if (STAGES[k][0] === name) { reached = k; easeFrom(STAGES[k][1], k); return; }
+                        }
+                    } catch (e) {   }
+                };
+
+                var loaded = 0;
+                function counted(bytes) {
+                    
+                    if (watch) watch.progress();
+                    loaded += bytes;
+                    var done = Math.min(1, loaded / total);
+                    if (reached >= 0) return;
+                    root.style.setProperty('--boot', String(DOWNLOAD_SHARE * done));
+                    if (done >= 1) easeFrom(DOWNLOAD_SHARE, -1);
+                }
+
+                function eager(response) {
+                    if (!response.ok || !response.body) { unmeasured(); return response; }
+                    var reader = response.body.getReader();
+                    var body = new ReadableStream({
+                        start: function (controller) {
+                            (function pump() {
+                                reader.read().then(function (step) {
+                                    if (step.done) { controller.close(); return; }
+                                    counted(step.value.byteLength);
+                                    controller.enqueue(step.value);
+                                    pump();
+                                }, function (e) { unmeasured(); controller.error(e); });
+                            })();
+                        }
+                    });
+
+                    return new Response(body, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: { 'Content-Type': response.headers.get('Content-Type') || '' }
+                    });
+                }
+
+                var early = {};
+                names.forEach(function (name) {
+                    early[name] = fetch(name, { credentials: 'same-origin' }).then(eager);
+
+                    early[name].catch(unmeasured);
+                });
+
+                var unclaimed = names.length;
+                var platformFetch = window.fetch;
+                window.fetch = function (input) {
+                    var name = null;
+                    try {
+                        var url = typeof input === 'string' ? input : (input && input.url) || String(input);
+                        name = new URL(url, document.baseURI).pathname.split('/').pop();
+                    } catch (e) {   }
+                    if (name && Object.prototype.hasOwnProperty.call(early, name)) {
+                        var claimed = early[name];
+                        delete early[name];
+                        if (--unclaimed === 0) window.fetch = platformFetch;
+                        return claimed;
+                    }
+                    return platformFetch.apply(window, arguments);
+                };
+                root.style.setProperty('--boot', '0');
+                root.setAttribute('data-boot', 'measured');
+            } catch (e) {
+                unmeasured();
+            }
+        })();
+    </script>
+    <script>
+         
+        (function () {
+            function isField(node) {
+                return !!node && (node.tagName === 'INPUT' || node.tagName === 'TEXTAREA');
+            }
+            
+            function composeRoot(node) {
+                var root = node && node.getRootNode ? node.getRootNode() : null;
+                return root && root !== document && root.host ? root : null;
+            }
+            var focus = HTMLElement.prototype.focus;
+            HTMLElement.prototype.focus = function () {
+                var root = isField(this) && composeRoot(this);
+                if (root && root.activeElement === this) return;
+                return focus.apply(this, arguments);
+            };
+
+            var tapped = null;
+            window.addEventListener('pointerup', function (e) {
+                tapped = e.pointerType !== 'mouse' && e.defaultPrevented
+                    ? composeRoot(e.composedPath()[0]) : null;
+            });
+            window.addEventListener('touchend', function (e) {
+                if (tapped && isField(tapped.activeElement) && e.cancelable) e.preventDefault();
+                tapped = null;
+            }, { capture: true, passive: false });
+        })();
+    </script>
+    <style>
+        
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #F5F1EA; touch-action: none; }
+        html[data-theme="dark"], html[data-theme="dark"] body { background: #191817; }
+        #root { position: fixed; inset: 0; }
+
+        #boot {
+            position: fixed; inset: 0; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 18px;
+            font: 500 17px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1E1B18;
+            
+            background: #F5F1EA;
+            
+            transition: opacity 180ms ease-out;
+        }
+        html[data-theme="dark"] #boot { color: #F5F1EA; background: #191817; }
+        #boot.gone { opacity: 0; pointer-events: none; }
+        
+        #boot img { width: 96px; height: 96px; display: block; border-radius: 22%; }
+        #boot .name { letter-spacing: 0.01em; }
+        #boot .hint { font-size: 14px; font-weight: 400; opacity: 0.66; }
+        
+        #boot .hint { position: relative; align-self: stretch; height: 1.3em; text-align: center; }
+        #boot .hint span { position: absolute; top: 0; left: 16px; right: 16px; white-space: nowrap; }
+        #boot .hint .quip { opacity: 0; will-change: opacity, transform; }
+        @keyframes crimp-said { 0%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-5px); } }
+        
+        #boot .first { display: none; max-width: 264px; text-align: center; font-size: 13px; font-weight: 400; line-height: 1.4; opacity: 0.6; }
+        html[data-first-visit] #boot .first { display: block; }
+        
+        #boot .bar { width: 172px; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(30, 27, 24, 0.14); }
+        html[data-theme="dark"] #boot .bar { background: rgba(245, 241, 234, 0.18); }
+        #boot .bar i { display: block; width: 40%; height: 100%; border-radius: 2px; background: #C75B39; animation: crimp-slide 1.15s ease-in-out infinite; }
+        html[data-theme="dark"] #boot .bar i { background: #E8886A; }
+        @keyframes crimp-slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(360%); } }
+        
+        @media (prefers-reduced-motion: reduce) {
+            #boot .bar i { width: 100%; animation: crimp-pulse 1.6s ease-in-out infinite; }
+            @keyframes crimp-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        }
+        
+        html[data-boot] #boot .bar i {
+            width: 100%; animation: none; transform-origin: left center;
+            transform: scaleX(var(--boot, 0)); transition: transform 240ms ease-out;
+            will-change: transform, opacity;
+        }
+        
+        @keyframes crimp-toward-a { from { transform: scaleX(var(--boot)); } to { transform: scaleX(var(--boot-to)); } }
+        @keyframes crimp-toward-b { from { transform: scaleX(var(--boot)); } to { transform: scaleX(var(--boot-to)); } }
+        html[data-boot="toward-a"] #boot .bar i { animation: crimp-toward-a var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards, crimp-breathe 1.4s ease-in-out var(--boot-secs, 2s) infinite; }
+        html[data-boot="toward-b"] #boot .bar i { animation: crimp-toward-b var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards, crimp-breathe 1.4s ease-in-out var(--boot-secs, 2s) infinite; }
+        @keyframes crimp-breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+        
+        html[data-boot="done"] #boot .bar i { transform: scaleX(1); }
+        @media (prefers-reduced-motion: reduce) {
+            html[data-boot] #boot .bar i { transition: none; }
+            
+            html[data-boot="toward-a"] #boot .bar i { animation: crimp-toward-a var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards; }
+            html[data-boot="toward-b"] #boot .bar i { animation: crimp-toward-b var(--boot-secs, 2s) cubic-bezier(0.25, 0.6, 0.35, 1) forwards; }
+            
+            #boot .hint span { transform: none !important; }
+        }
+        
+        #boot .cannot { display: none; max-width: 280px; margin: 0; text-align: center; text-wrap: balance; font-size: 15px; font-weight: 400; line-height: 1.45; }
+        #boot .cannot p { margin: 0; }
+        html[data-cannot-start] #boot .bar,
+        html[data-cannot-start] #boot .hint,
+        html[data-cannot-start] #boot .first { display: none; }
+        html[data-cannot-start="browser"] #boot .cannot.browser,
+        html[data-cannot-start="quiet"] #boot .cannot.quiet { display: block; }
+        
+        #boot .cannot button {
+            display: block; margin: 16px auto 0; height: 40px; padding: 0 24px;
+            font: 500 14px/38px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #C75B39; background: transparent; cursor: pointer;
+            border: 1px solid rgba(30, 27, 24, 0.3); border-radius: 20px;
+        }
+        html[data-theme="dark"] #boot .cannot button { color: #E8886A; border-color: rgba(245, 241, 234, 0.3); }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<div id="boot" role="status">
+    <img src="icons/icon-192.png" alt="">
+    <div class="name">Broken Crimp</div>
+    <div class="bar"><i></i></div>
+    <div class="hint"><span class="said">Loading…</span></div>
+    <div class="first">The first visit takes longer while the app downloads. After that, it opens faster.</div>
+    
+    <p class="cannot browser">This browser can't run Broken Crimp. Update your browser or your phone's software, or open this page on another&nbsp;device.</p>
+    <div class="cannot quiet">
+        <p>Broken Crimp is taking too long to start</p>
+        <button type="button" id="boot-retry">Try again</button>
+    </div>
+</div>
+<script>
+     
+    (function () {
+        var QUIPS = [
+            'Flaking the rope…',
+            'Spraying beta…',
+            'Brushing the holds…',
+            'Chalking up…',
+            'Crimping the crimps…',
+            'Smearing the walls…',
+            'Jamming the cracks…',
+            'Dropping the knees…',
+            'Finding the kneebar…',
+            'Matching the jugs…',
+            'Clipping the chains…'
+        ];
+        var FIRST = 1.8;  
+        var SLOT = 2.4;   
+        try {
+            var hint = document.querySelector('#boot .hint');
+            var said = hint && hint.querySelector('.said');
+            if (!said) return;
+            for (var i = QUIPS.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var swap = QUIPS[i]; QUIPS[i] = QUIPS[j]; QUIPS[j] = swap;
+            }
+
+            var share = 100 / QUIPS.length;
+            var style = document.createElement('style');
+            style.textContent = '@keyframes crimp-quip {' +
+                '0% { opacity: 0; transform: translateY(5px); }' +
+                (share * 0.12).toFixed(3) + '% { opacity: 1; transform: none; }' +
+                (share * 0.85).toFixed(3) + '% { opacity: 1; transform: none; }' +
+                share.toFixed(3) + '%, 100% { opacity: 0; transform: translateY(-5px); } }';
+            document.head.appendChild(style);
+            var cycle = QUIPS.length * SLOT;
+            QUIPS.forEach(function (words, k) {
+                var line = document.createElement('span');
+                line.className = 'quip';
+                line.setAttribute('aria-hidden', 'true');
+                line.textContent = words;
+                line.style.animation = 'crimp-quip ' + cycle + 's linear ' + (FIRST + k * SLOT) + 's infinite both';
+                hint.appendChild(line);
+            });
+            said.style.animation = 'crimp-said ' + FIRST + 's linear forwards';
+        } catch (e) {   }
+    })();
+</script>
+<script>
+     
+    (function () {
+        if (document.documentElement.getAttribute('data-cannot-start') === 'browser') return;
+        var app = document.createElement('script');
+        app.src = 'brokencrimp.js';
+        document.body.appendChild(app);
+    })();
+</script>
+<script type="application/javascript">
+     
+    window.brokenCrimpReady = function () {
+        if (window.brokenCrimpWatch) window.brokenCrimpWatch.end();
+        var boot = document.getElementById('boot');
+        if (!boot) return;
+
+        var root = document.documentElement;
+        root.style.setProperty('--boot', '1');
+        if (root.hasAttribute('data-boot')) root.setAttribute('data-boot', 'done');
+        boot.classList.add('gone');
+
+        window.setTimeout(function () { if (boot.parentNode) boot.parentNode.removeChild(boot); }, 220);
+    };
+
+    (function () {
+
+        var retry = document.getElementById('boot-retry');
+        if (retry) retry.addEventListener('click', function () { window.location.reload(); });
+
+        var cannotRun = document.documentElement.getAttribute('data-cannot-start') === 'browser';
+        if (cannotRun) {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(function (registration) {
+                    if (registration) return registration.unregister();
+                }).catch(function () {   });
+            }
+            if (window.caches) {
+                caches.keys().then(function (names) {
+                    return Promise.all(names.filter(function (name) {
+                        return name.indexOf('brokencrimp-') === 0;
+                    }).map(function (name) { return caches.delete(name); }));
+                }).catch(function () {   });
+            }
+        }
+
+        if (!cannotRun && 'serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').catch(function (e) {
+
+                    console.warn('Broken Crimp: the offline worker did not register', e);
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

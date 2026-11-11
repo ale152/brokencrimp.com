@@ -1,0 +1,435 @@
+{
+  "format": "brokencrimp.beta",
+  "version": 8,
+  "project": {
+    "name": "Midnight Lightning",
+    "grade": "V8 (7B+)",
+    "style": "BOULDER",
+    "location": "Columbia Boulder, Camp 4, Yosemite, USA",
+    "notes": "",
+    "colorIndex": 2,
+    "holdScale": 1,
+    "photoScale": 1,
+    "photoOffsetX": 0,
+    "photoOffsetY": 0,
+    "photoRotation": 0,
+    "photoAlpha": 0.550000011920929,
+    "photoSaturation": 0.30000001192092896
+  },
+  "placements": [
+    {
+      "localId": 0,
+      "type": "FOOTHOLD",
+      "x": -85,
+      "y": -200,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 1,
+      "type": "FOOTHOLD",
+      "x": 60,
+      "y": -270,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 2,
+      "type": "CRIMP",
+      "customName": "Start crimp",
+      "x": -60,
+      "y": -650,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 3,
+      "type": "CRIMP",
+      "customName": "Start crimp",
+      "x": 45,
+      "y": -690,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 4,
+      "type": "UNDERCLING",
+      "customName": "Undercling crimp",
+      "x": 85,
+      "y": -905,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 5,
+      "type": "CRIMP",
+      "customName": "Left crimp",
+      "x": -95,
+      "y": -985,
+      "rotation": 0,
+      "scale": 0.8999999761581421
+    },
+    {
+      "localId": 6,
+      "type": "CRIMP",
+      "customName": "Ledge crimp",
+      "x": -70,
+      "y": -1125,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 7,
+      "type": "FOOTHOLD",
+      "x": -110,
+      "y": -520,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 8,
+      "type": "FOOTHOLD",
+      "x": 70,
+      "y": -560,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 9,
+      "type": "RAIL",
+      "customName": "Lightning bolt hold",
+      "x": 125,
+      "y": -1480,
+      "rotation": -20,
+      "scale": 1.2000000476837158
+    },
+    {
+      "localId": 10,
+      "type": "SMEAR",
+      "customName": "Right smear",
+      "x": 340,
+      "y": -1250,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 11,
+      "type": "FOOTHOLD",
+      "x": 150,
+      "y": -1160,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 12,
+      "type": "SLOPER",
+      "customName": "Lip",
+      "x": 320,
+      "y": -1840,
+      "rotation": 0,
+      "scale": 1.2999999523162842
+    },
+    {
+      "localId": 13,
+      "type": "SLOPER",
+      "customName": "Lip",
+      "x": 205,
+      "y": -1850,
+      "rotation": 0,
+      "scale": 1.2999999523162842
+    },
+    {
+      "localId": 14,
+      "type": "SMEAR",
+      "customName": "High smear",
+      "x": 430,
+      "y": -1690,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 15,
+      "type": "JUG",
+      "customName": "Slab edge",
+      "x": 290,
+      "y": -2230,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 16,
+      "type": "SMEAR",
+      "x": 350,
+      "y": -2120,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 17,
+      "type": "HANDHOLD",
+      "x": 320,
+      "y": -2540,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 18,
+      "type": "SMEAR",
+      "x": 240,
+      "y": -2330,
+      "rotation": 0,
+      "scale": 1
+    },
+    {
+      "localId": 19,
+      "type": "LEDGE",
+      "customName": "Top",
+      "x": 280,
+      "y": -2840,
+      "rotation": 0,
+      "scale": 1.5
+    }
+  ],
+  "sections": [],
+  "betas": [
+    {
+      "name": "Standard sequence",
+      "climberHeight": 1.0285999774932861,
+      "steps": [
+        {
+          "orderIndex": 0,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 2,
+          "action": "CRIMP",
+          "note": "Stand start on the polished opening crimps."
+        },
+        {
+          "orderIndex": 1,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 3,
+          "action": "CRIMP",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 2,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 0,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 3,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 1,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 4,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 4,
+          "action": "GRAB",
+          "note": "Fire the right hand up to the undercling crimp. Many tries end here."
+        },
+        {
+          "orderIndex": 5,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 5,
+          "action": "CRIMP",
+          "note": "Left hand up.",
+          "bodyX": -6,
+          "bodyY": -655
+        },
+        {
+          "orderIndex": 6,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 7,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 7,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 6,
+          "action": "BUMP",
+          "note": "Bump the left hand to the crimp about 3 m off the ground, then set the feet."
+        },
+        {
+          "orderIndex": 8,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 8,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 9,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 9,
+          "action": "DYNO",
+          "note": "Jump right hand to the lightning bolt hold. The feet fly off the wall. Tall climbers can reach it without jumping.",
+          "tags": [
+            "CRUX"
+          ]
+        },
+        {
+          "orderIndex": 10,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 7,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 11,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 8,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 12,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 9,
+          "action": "MATCH",
+          "note": "Hold the swing and match the bolt."
+        },
+        {
+          "orderIndex": 13,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 10,
+          "action": "SMEAR",
+          "note": "Throw the body right and walk the feet through to the smear on the right."
+        },
+        {
+          "orderIndex": 14,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 11,
+          "action": "STEP_ON",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 15,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 12,
+          "action": "GRAB",
+          "note": "Right hand to the lip, almost 5 m up."
+        },
+        {
+          "orderIndex": 16,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 13,
+          "action": "GRAB",
+          "note": "Left hand to the lip and a high right foot on a slippery smear.",
+          "bodyX": 262,
+          "bodyY": -1545
+        },
+        {
+          "orderIndex": 17,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 14,
+          "action": "SMEAR",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 18,
+          "kind": "MOVE",
+          "limb": "BODY",
+          "action": "MANTLE",
+          "note": "The mantel. Push up, then over onto the right foot. The body position has to be exact.",
+          "tags": [
+            "CRUX"
+          ],
+          "pose": "1;672.000,41.664,264.687,-2066.190,269.937,-1991.109,284.000,-1790.000,203.838,-1973.014,337.911,-1982.389,116.422,-1904.802,407.687,-1896.217,205.000,-1850.000,320.000,-1840.000,242.437,-1787.094,325.563,-1792.906,196.130,-1625.602,486.515,-1841.054,184.880,-1464.715,430.000,-1690.000;22",
+          "x": 279,
+          "y": -1855
+        },
+        {
+          "orderIndex": 19,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 11,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 20,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 15,
+          "action": "GRAB",
+          "note": "Press out and reach the good edge on the slab."
+        },
+        {
+          "orderIndex": 21,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 13,
+          "action": "SMEAR",
+          "note": "Stand up on the lip.",
+          "tilt": -6,
+          "bodyX": 215,
+          "bodyY": -2035
+        },
+        {
+          "orderIndex": 22,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 12,
+          "action": "LET_GO",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 23,
+          "kind": "MOVE",
+          "limb": "RIGHT_HAND",
+          "placementLocalId": 17,
+          "action": "GRAB",
+          "note": "Walk up the slab.",
+          "bodyX": 296,
+          "bodyY": -2240
+        },
+        {
+          "orderIndex": 24,
+          "kind": "MOVE",
+          "limb": "RIGHT_FOOT",
+          "placementLocalId": 16,
+          "action": "SMEAR",
+          "joinsPrevious": true
+        },
+        {
+          "orderIndex": 25,
+          "kind": "MOVE",
+          "limb": "LEFT_HAND",
+          "placementLocalId": 19,
+          "action": "GRAB",
+          "note": "The top of the boulder, 7.6 m up."
+        },
+        {
+          "orderIndex": 26,
+          "kind": "MOVE",
+          "limb": "LEFT_FOOT",
+          "placementLocalId": 18,
+          "action": "SMEAR",
+          "joinsPrevious": true
+        }
+      ]
+    }
+  ]
+}

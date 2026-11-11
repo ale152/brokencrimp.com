@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<article>
+  <p class="eyebrow"><a href="/climbs/">Famous climbs</a></p>
+  <h1>{{ page.title }}</h1>
+  <dl class="facts">
+    <dt>Grade</dt><dd>{{ page.grade }}</dd>
+    <dt>Style</dt><dd>{{ page.style }}</dd>
+    <dt>Where</dt><dd>{{ page.where }}</dd>
+    <dt>First ascent</dt><dd>{{ page.first_ascent }}</dd>
+  </dl>
+  {% if page.video %}<video class="climb-video" src="{{ page.video }}"{% if page.poster %} poster="{{ page.poster }}"{% endif %} controls muted playsinline preload="none" aria-label="The figure climbing {{ page.title }}, move by move."></video>{% endif %}
+  {% unless page.video %}<figure class="climb-crux"><img src="/assets/climbs/{{ page.slug }}/screen.webp" alt="{{ page.title }} in the app. {{ page.crux }}" width="540" height="1200"><figcaption>{{ page.crux }}</figcaption></figure>{% endunless %}
+{{ content }}
+  
+  {% if page.beta_file %}<p class="actions"><a class="btn primary" href="/app/?import={{ page.beta_file }}">Open it in the web app</a> <a class="btn" href="{{ page.beta_file }}" download>Download the .beta file</a></p>{% endif %}
+  {% if page.sources.size > 0 %}
+  <h2>Sources</h2>
+  <ul>{% for source in page.sources %}<li><a href="{{ source.url }}" rel="noopener">{{ source.title }}</a></li>{% endfor %}</ul>
+  {% endif %}
+  <p class="page-note">An unofficial reconstruction, put together from the public sources above. It is not affiliated with or endorsed by the climbers or sources named, and it is no substitute for your own judgement on the rock. See the <a href="/terms/">Terms of Use</a>.</p>
+</article>
+{% include get-app.html %}
